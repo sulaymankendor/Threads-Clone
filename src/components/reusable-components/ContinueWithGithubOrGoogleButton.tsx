@@ -1,11 +1,19 @@
-function ContinueWithGithubOrGoogleButton({ accountName }) {
+import { GitHub } from "@mui/icons-material";
+
+import GoogleLogoSVG from "@/svg/GoogleLogoSVG";
+import GithubAndGoogleButton from "./GithubAndGoogleButton";
+
+function ContinueWithGithubAndGoogleButton() {
   return (
-    <button className="p-2 border rounded mb-2 border-gray-200 hover:bg-gray-50 active:bg-white">
-      <p className="text-gray-600 text-xs font-semibold">
-        Continue with {accountName}
-      </p>
-    </button>
+    <>
+      <GithubAndGoogleButton>
+        <GitHub sx={{ width: "24px" }} />
+      </GithubAndGoogleButton>
+      <GithubAndGoogleButton>
+        <GoogleLogoSVG />
+      </GithubAndGoogleButton>
+    </>
   );
 }
 
-export default ContinueWithGithubOrGoogleButton;
+export default ContinueWithGithubAndGoogleButton;

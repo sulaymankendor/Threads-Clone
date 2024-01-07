@@ -1,5 +1,5 @@
 import { Avatar } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function Profile() {
   const [username, setUsername] = useState("amanda lee");

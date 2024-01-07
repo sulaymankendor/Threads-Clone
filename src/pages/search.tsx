@@ -42,6 +42,13 @@ function search() {
         <User />
         <User />
         <User />
+        <User />
+        <User />
+        <User />
+        <User />
+        <User />
+        <User />
+        <User />
       </div>
     </section>
   );

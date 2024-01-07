@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Avatar, Button } from "@mui/material";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import Link from "next/link";
-import { useRouter } from "next/router";
+
 function ProfileLayout() {
   const route = useRouter();
-  console.log(route);
   const [backgroundColorOfThreadsButton, setBackgroundColorOfThreadsButton] =
     useState("");
   const [backgroundColorOfRepliesButton, setBackgroundColorOfRepliesButton] =
@@ -35,14 +35,18 @@ function ProfileLayout() {
     setAlignment(newAlignment);
   };
   useEffect(() => {
-    const k = document.getElementsByClassName(
+    const listOfUsersComments = document.getElementsByClassName(
       "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
     );
-    for (let i = 0; i < k.length; i++) {
+    for (
+      let currentUser = 0;
+      currentUser < listOfUsersComments.length;
+      currentUser++
+    ) {
       // @ts-ignore
-      k[i].style.width = "20px";
+      listOfUsersComments[currentUser].style.width = "20px";
       // @ts-ignore
-      k[i].style.height = "20px";
+      listOfUsersComments[currentUser].style.height = "20px";
     }
   }, []);
   return (
@@ -61,7 +65,7 @@ function ProfileLayout() {
         </div>
         <Link
           href={"/profile/edit-profile"}
-          className="transition-all bg-zinc-900 hover:bg-blue-600 py-2 px-3 rounded capitalize mr-12 text-gray-300 flex items-center justify-between"
+          className="transition-all bg-zinc-900 hover:bg-emerald-600 py-2 px-3 rounded capitalize mr-12 text-gray-300 flex items-center justify-between"
         >
           <EditIcon className="text-gray-300 mr-1" />
           <p>Edit</p>
@@ -69,20 +73,20 @@ function ProfileLayout() {
       </div>
       <p className="text-gray-300 ml-12 my-4">Code + Design</p>
       <div className="border-b-[1px] border-b-zinc-900 w-[87%] ml-12 mt-14"></div>
-      <div className="mt-10 ml-12">
+      <div className="mt-10 ml-12 w-[87%]">
         <ToggleButtonGroup
           value={alignment}
           exclusive
           onChange={handleAlignment}
           aria-label="text alignment"
-          className="bg-zinc-900 w-[93%]"
+          className="bg-zinc-900 w-full"
           color="primary"
           sx={{ width: 663, height: 35 }}
         >
           <Button
             value="left"
             aria-label="left aligned"
-            sx={{ width: widthValue }}
+            sx={{ width: widthValue, transition: "none" }}
             className={`${backgroundColorOfThreadsButton} transition-none`}
             onClick={() => {
               route.replace("/profile/threads");

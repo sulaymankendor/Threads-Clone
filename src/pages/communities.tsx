@@ -1,5 +1,6 @@
-import ListedCommunity from "@/components/listed-community/ListedCommunity";
 import { useEffect } from "react";
+import ListedCommunity from "@/components/listed-community/ListedCommunity";
+
 function Communities() {
   useEffect(() => {
     const k = document.getElementsByClassName(

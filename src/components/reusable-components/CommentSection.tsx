@@ -1,6 +1,7 @@
 import { Avatar, Button } from "@mui/material";
-import Comment from "./Comment";
 import { LoadingButton } from "@mui/lab";
+
+import Comment from "./Comment";
 
 function CommentSection({ verticalMargin }) {
   return (

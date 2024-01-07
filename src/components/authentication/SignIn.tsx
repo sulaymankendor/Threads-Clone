@@ -1,6 +1,7 @@
-import ThreadsLogo from "@/svg/ThreadsLogo";
-import ContinueWithGithubOrGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
 import { LoadingButton } from "@mui/lab";
+
+import ThreadsLogo from "@/svg/ThreadsLogo";
+import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
 
 function SignIn({ slideToSignUp }) {
   return (
@@ -9,8 +10,7 @@ function SignIn({ slideToSignUp }) {
       <h1 className="font-bold ">Sign in</h1>
       <p className="text-gray-500 text-sm">to continue to Threads</p>
       <div className="flex flex-col mt-8">
-        <ContinueWithGithubOrGoogleButton accountName="Github" />
-        <ContinueWithGithubOrGoogleButton accountName="Google" />
+        <ContinueWithGithubAndGoogleButton />
       </div>
       <p className="self-center mt-3">or</p>
       <div>
@@ -38,7 +38,7 @@ function SignIn({ slideToSignUp }) {
           Have an account?{" "}
           <button
             onClick={() => {
-              slideToSignUp("translate-x-[0px]");
+              slideToSignUp("translate-x-[-435px]");
             }}
             className="text-violet-500 hover:text-violet-800"
           >

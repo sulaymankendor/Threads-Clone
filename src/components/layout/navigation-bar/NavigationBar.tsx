@@ -1,11 +1,12 @@
 import Heart from "@/svg/Heart";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
 import Home from "@/svg/Home";
 import PlusCircle from "@/svg/PlusCircle";
 import Search from "@/svg/Search";
 import User from "@/svg/User";
 import Users from "@/svg/Users";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
 function NavigationBar() {
   const route = useRouter();

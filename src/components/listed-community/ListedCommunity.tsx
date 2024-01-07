@@ -1,6 +1,6 @@
+import React from "react";
 import { Avatar, AvatarGroup } from "@mui/material";
 import Link from "next/link";
-import React from "react";
 
 function ListedCommunity() {
   const avatarWidthHeight = 20;

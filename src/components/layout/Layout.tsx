@@ -1,16 +1,24 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+
+import { useBodyScrollLock } from "../../../utilities/lockscroll";
 import Header from "@/components/home/Header";
 import NavigationBar from "./navigation-bar/NavigationBar";
 import Suggestions from "./suggestions/Suggestions";
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useBodyScrollLock } from "../../../utilities/lockscroll";
 import Authentication from "../authentication/Authentication";
 import CreateProfile from "../create-a-profile/CreateProfile";
 
 function layout({ children }) {
   useBodyScrollLock();
   const route = useRouter();
+  const [showAuthenticationModal, setShowAuthenticationModal] = useState(false);
+
+  useEffect(() => {
+    if (route.route === "/") {
+      setShowAuthenticationModal(true);
+    }
+  }, [route.route]);
   const [currentPageTitle, setCurrentPageTitle] = useState(
     route.route.split("/")[1]
   );
@@ -34,8 +42,8 @@ function layout({ children }) {
         {children}
         <Suggestions />
       </main>
-      {/* <Authentication /> */}
-      <CreateProfile />
+      {showAuthenticationModal && <Authentication />}
+      {/* <CreateProfile /> */}
     </div>
   );
 }

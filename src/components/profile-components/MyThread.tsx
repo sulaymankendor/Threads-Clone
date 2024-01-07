@@ -1,11 +1,13 @@
+import { useState } from "react";
+import { Avatar, AvatarGroup, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Avatar, AvatarGroup, IconButton } from "@mui/material";
-import Comment from "../reusable-components/Comment";
+
 import CommentSection from "../reusable-components/CommentSection";
-import { useState } from "react";
+import Comment from "../reusable-components/Comment";
+
 function MyThread() {
   const avatarWidthHeight = 20;
   const [showCommentSection, setShowCommentSection] = useState(false);

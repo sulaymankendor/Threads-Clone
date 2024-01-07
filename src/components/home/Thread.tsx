@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import ShareIcon from "@mui/icons-material/Share";
+
 import CommentSection from "../reusable-components/CommentSection";
-import { useState } from "react";
+
 function Thread() {
   const [showCommentSection, setShowCommentSection] = useState(false);
   return (
