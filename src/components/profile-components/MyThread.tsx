@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Avatar, AvatarGroup, IconButton } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Avatar, AvatarGroup, IconButton } from "@mui/material";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 import CommentSection from "../reusable-components/CommentSection";
-import Comment from "../reusable-components/Comment";
+
+const avatarWidthHeight = 20;
 
 function MyThread() {
-  const avatarWidthHeight = 20;
   const [showCommentSection, setShowCommentSection] = useState(false);
 
   return (
@@ -116,7 +116,10 @@ function MyThread() {
       </div>
       <div className="ml-12 w-[87%]">
         {showCommentSection && (
-          <CommentSection verticalMargin={"mt-[0px] mb-4"} />
+          <CommentSection
+            verticalMargin={"mt-[0px] mb-4"}
+            closeShowCommentsSection={setShowCommentSection}
+          />
         )}
       </div>
     </div>

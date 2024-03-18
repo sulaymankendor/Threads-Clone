@@ -1,5 +1,5 @@
-import { LoadingButton } from "@mui/lab";
 import { Avatar } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 function EditProfile() {
   return (
@@ -27,12 +27,7 @@ function EditProfile() {
             className="text-gray-200 outline-none border-none w-[90%] p-2 rounded bg-zinc-900"
             value={"Sulayman Kendor"}
           />
-          <p className="text-white mt-8 mb-4">Username</p>
-          <input
-            placeholder="Enter your name"
-            className="outline-none border-none w-[90%] p-2 rounded text-gray-200 bg-zinc-900"
-            value={"skendor"}
-          />
+
           <p className="text-white mt-8 mb-3">Bio</p>
           <textarea
             value={"I love Coding 🚀"}

@@ -1,11 +1,11 @@
+import ShareIcon from "@mui/icons-material/Share";
 import { Avatar, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
-import ShareIcon from "@mui/icons-material/Share";
 
 function Comment() {
   return (
-    <div className="border-y-gray-800 border-b-[0.5px] p-3 bg-gray-950">
+    <div className="border-y-gray-800 border-t-[0.5px] p-3 bg-gray-950 ">
       <div className="w-[90%] flex items-center mt-5">
         <Avatar
           alt="Remy Sharp"

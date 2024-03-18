@@ -1,5 +1,3 @@
-import { Avatar } from "@mui/material";
-
 function Activity() {
   return (
     <section className="h-[91vh] overflow-y-scroll flex flex-col items-center w-full">

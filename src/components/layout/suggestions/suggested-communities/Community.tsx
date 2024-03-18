@@ -1,5 +1,5 @@
-import { Avatar } from "@mui/material";
 import Link from "next/link";
+import { Avatar } from "@mui/material";
 
 function Communities() {
   return (

@@ -1,22 +1,16 @@
-import React from "react";
-import { Oval } from "react-loader-spinner";
-
-function ContinueButton({ submit, onSubmit, disabled }) {
+function ContinueButton({ onClick }: { onClick: any }) {
   return (
     <button
-      disabled={true}
-      onClick={() => submit()}
-      className={`flex text-center justify-center p-[6px] rounded text-xs font-semibold w-full ${
-        disabled ? "text-gray-300" : "text-gray-100"
-      } ${disabled === false && "hover:bg-violet-500"} ${
-        disabled ? "bg-violet-900" : "bg-violet-600"
-      }`}
+      className={
+        "flex text-center justify-center p-[6px] rounded text-xs font-semibold text-gray-100 w-full bg-violet-600 hover:bg-violet-500"
+      }
+      onClick={onClick()}
     >
-      {onSubmit ? (
+      {/* {onSubmit ? (
         <Oval strokeWidth={5} width={"20px"} height={"20px"} />
       ) : (
-        <p className="uppercase font-normal">Continue</p>
-      )}
+      )} */}
+      <p className="uppercase font-normal">Continue</p>
     </button>
   );
 }

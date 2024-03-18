@@ -1,32 +1,31 @@
-import Heart from "@/svg/Heart";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Home from "@/svg/Home";
-import PlusCircle from "@/svg/PlusCircle";
-import Search from "@/svg/Search";
 import User from "@/svg/User";
+import Heart from "@/svg/Heart";
 import Users from "@/svg/Users";
+import Search from "@/svg/Search";
+import PlusCircle from "@/svg/PlusCircle";
 
+const navLinks: { navigationName: string; svg: JSX.Element; path: string }[] = [
+  { navigationName: "Home", svg: <Home />, path: "/" },
+  { navigationName: "Search", svg: <Search />, path: "/search" },
+  {
+    navigationName: "Activity",
+    svg: <Heart width="24px" svgColor="text-white" />,
+    path: "/activity",
+  },
+  {
+    navigationName: "Create Thread",
+    svg: <PlusCircle />,
+    path: "/create-a-post",
+  },
+  { navigationName: "Communities", svg: <Users />, path: "/communities" },
+  { navigationName: "Profile", svg: <User />, path: "/profile/threads" },
+];
 function NavigationBar() {
   const route = useRouter();
-  const navLinks: { navigationName: string; svg: JSX.Element; path: string }[] =
-    [
-      { navigationName: "Home", svg: <Home />, path: "/" },
-      { navigationName: "Search", svg: <Search />, path: "/search" },
-      {
-        navigationName: "Activity",
-        svg: <Heart width="24px" svgColor="text-white" />,
-        path: "/activity",
-      },
-      {
-        navigationName: "Create Thread",
-        svg: <PlusCircle />,
-        path: "/create-a-post",
-      },
-      { navigationName: "Communities", svg: <Users />, path: "/communities" },
-      { navigationName: "Profile", svg: <User />, path: "/profile/threads" },
-    ];
   return (
     <section>
       <nav className="w-[210px] p-1 bg-zinc-900 h-[93vh]">

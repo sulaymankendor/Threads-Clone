@@ -1,9 +1,9 @@
-import React from "react";
-import { Avatar, AvatarGroup } from "@mui/material";
 import Link from "next/link";
+import { Avatar, AvatarGroup } from "@mui/material";
+
+const avatarWidthHeight = 20;
 
 function ListedCommunity() {
-  const avatarWidthHeight = 20;
   return (
     <div className="bg-zinc-900 p-5 rounded w-[43%] ml-8 mb-6 ">
       <div className="flex items-center">

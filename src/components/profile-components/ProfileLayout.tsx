@@ -1,39 +1,25 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Avatar, Button } from "@mui/material";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 
+const widthValue = 500;
+
 function ProfileLayout() {
   const route = useRouter();
+  const [alignment, setAlignment] = useState<string | null>("left");
   const [backgroundColorOfThreadsButton, setBackgroundColorOfThreadsButton] =
     useState("");
   const [backgroundColorOfRepliesButton, setBackgroundColorOfRepliesButton] =
     useState("");
   const [backgroundColorOfTaggedButton, setBackgroundColorOfTaggedButton] =
     useState("");
-  useState("");
-  useEffect(() => {
-    if (route.asPath.split("/")[2] === "threads") {
-      setBackgroundColorOfThreadsButton("bg-gray-800 hover:bg-gray-800");
-    } else if (route.asPath.split("/")[2] === "replies") {
-      setBackgroundColorOfRepliesButton("bg-gray-800 hover:bg-gray-800");
-    } else if (route.asPath.split("/")[2] === "tagged") {
-      setBackgroundColorOfTaggedButton("bg-gray-800 hover:bg-gray-800");
-    }
-  }, [route.route]);
-  const [alignment, setAlignment] = useState<string | null>("left");
-  const widthValue = 500;
-  const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null
-  ) => {
-    setAlignment(newAlignment);
-  };
+
   useEffect(() => {
     const listOfUsersComments = document.getElementsByClassName(
       "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
@@ -49,6 +35,17 @@ function ProfileLayout() {
       listOfUsersComments[currentUser].style.height = "20px";
     }
   }, []);
+
+  useEffect(() => {
+    if (route.asPath.split("/")[2] === "threads") {
+      setBackgroundColorOfThreadsButton("bg-gray-800 hover:bg-gray-800");
+    } else if (route.asPath.split("/")[2] === "replies") {
+      setBackgroundColorOfRepliesButton("bg-gray-800 hover:bg-gray-800");
+    } else if (route.asPath.split("/")[2] === "tagged") {
+      setBackgroundColorOfTaggedButton("bg-gray-800 hover:bg-gray-800");
+    }
+  }, [route.route]);
+
   return (
     <div className="w-full">
       <div className="w-full flex justify-between mt-9 items-center">
@@ -65,7 +62,7 @@ function ProfileLayout() {
         </div>
         <Link
           href={"/profile/edit-profile"}
-          className="transition-all bg-zinc-900 hover:bg-emerald-600 py-2 px-3 rounded capitalize mr-12 text-gray-300 flex items-center justify-between"
+          className="transition-all bg-zinc-900 hover:bg-indigo-600 py-2 px-3 rounded capitalize mr-12 text-gray-300 flex items-center justify-between"
         >
           <EditIcon className="text-gray-300 mr-1" />
           <p>Edit</p>
@@ -77,7 +74,12 @@ function ProfileLayout() {
         <ToggleButtonGroup
           value={alignment}
           exclusive
-          onChange={handleAlignment}
+          onChange={(
+            event: React.MouseEvent<HTMLElement>,
+            newAlignment: string | null
+          ) => {
+            setAlignment(newAlignment);
+          }}
           aria-label="text alignment"
           className="bg-zinc-900 w-full"
           color="primary"

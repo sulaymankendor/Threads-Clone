@@ -1,4 +1,4 @@
-function Heart({ width, svgColor }) {
+function Heart({ width, svgColor }: { width: string; svgColor: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,151 +1,166 @@
-import { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useContext } from "react";
+
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 import { app } from "../../../lib/firebase-config";
-
 import ThreadsLogo from "@/svg/ThreadsLogo";
+import { SubmitHandler } from "react-hook-form";
+import { CreateAccountFormInput } from "../../../utilities/types";
 import ContinueButton from "../reusable-components/ContinueButton";
-import FormErrorMsg from "../reusable-components/FormErrorMsg";
+import { createUserAccountSchema } from "../../../utilities/authenticationSchema";
 import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
+import { useRouter } from "next/router";
+import { ShowOnBoardingModalContext } from "@/pages/_app";
 
-function CreateAnAccount({ slideToSignIn }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [onSubmit, setOnSubmit] = useState(false);
-  const [formErrorMessage, setFormErrorMessage] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [showFormErrorMsg, setShowFormErrorMsg] = useState("hidden");
-  const [disableInputs, setDisableInputs] = useState(false);
-  const [disableSignInBtn, setDisableSignInBtn] = useState(false);
-
+function CreateAnAccount({
+  slideToSignIn,
+}: {
+  slideToSignIn: Dispatch<SetStateAction<string>>;
+}) {
+  const router = useRouter();
   const auth = getAuth(app);
-  useEffect(() => {
-    if (username && email && password && confirmPassword) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [username, email, password, confirmPassword]);
+  const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
+  const {
+    reset,
+    clearErrors,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateAccountFormInput>({
+    resolver: zodResolver(createUserAccountSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+  const handleCreateUserAccount: SubmitHandler<CreateAccountFormInput> = (
+    data
+  ) => {
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        await updateProfile(user, {
+          displayName: data.name,
+        });
+        showOnBoardingModal?.setShowOnBoardingModal(true);
+        router.push("/?Onboarding", undefined, { shallow: true });
+      })
+
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
+
   return (
-    <div className="flex flex-col w-[312px] mt-[-20px] h-[630px] overflow-y-scroll">
+    <div className="flex flex-col w-[312px] mt-[-30px] h-[666px] overflow-y-scroll">
       <ThreadsLogo />
       <h1 className="font-bold ">Create an Account</h1>
       <p className="text-gray-500 text-sm">to continue to Threads</p>
       <div className="flex flex-col mt-5">
         <ContinueWithGithubAndGoogleButton />
       </div>
-      <p className="self-center mt-3">or</p>
-
-      <FormErrorMsg
-        showFormErrorMsg={showFormErrorMsg}
-        message={formErrorMessage}
-        setShowFormErrorMsg={setShowFormErrorMsg}
-      />
+      <p className="self-center -mb-2">or</p>
       <div>
-        <form
-          action="post"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <form action="post" onSubmit={handleSubmit(handleCreateUserAccount)}>
           <div className="flex flex-col mb-5 mt-1">
             <label className="text-xs font-semibold text-gray-500 mb-1">
-              Username
+              Name
             </label>
             <input
-              disabled={disableInputs}
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-              value={username}
+              disabled={false}
               className="border rounded fous:outline-[0.1px] px-3 outline-gray-300 outline-1 py-1 text-sm"
+              {...register("name", {
+                required: true,
+                maxLength: 100,
+              })}
             />
+            {errors.name?.message && (
+              <p className="text-xs font-semibold text-red-500">
+                {errors.name.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col mb-5">
             <label className="text-xs font-semibold text-gray-500 mb-1">
               Email Address
             </label>
             <input
-              disabled={disableInputs}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-              value={email}
+              disabled={false}
               type="email"
               className="text-sm border rounded fous:outline-[0.1px] px-3 outline-gray-300 outline-1 py-1"
+              {...register("email", {
+                required: true,
+                maxLength: 100,
+              })}
             />
+            {errors.email?.message && (
+              <p className="text-xs font-semibold text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col mb-5">
             <label className="text-xs font-semibold text-gray-500 mb-1">
               Password
             </label>
             <input
-              disabled={disableInputs}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-              value={password}
+              disabled={false}
               className="text-sm border rounded fous:outline-[0.1px] px-3 outline-gray-300 outline-1 py-1"
+              {...register("password", {
+                required: true,
+                maxLength: 100,
+              })}
+              type="password"
             />
+            {errors.password?.message && (
+              <p className="text-xs font-semibold text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col mb-5">
             <label className="text-xs font-semibold text-gray-500 mb-1">
               Confirm Password
             </label>
             <input
-              disabled={disableInputs}
-              onChange={(event) => {
-                setConfirmPassword(event.target.value);
-              }}
-              value={confirmPassword}
+              disabled={false}
               className="text-sm border rounded fous:outline-[0.1px] px-3 outline-gray-300 outline-1 py-1"
+              {...register("confirmPassword", {
+                required: true,
+                maxLength: 100,
+              })}
+              type="password"
             />
+            {errors.confirmPassword?.message && (
+              <p className="text-xs font-semibold text-red-500">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
           <ContinueButton
-            disabled={isDisabled}
-            submit={() => {
-              if (username && email && password && confirmPassword) {
-                if (email.includes("@")) {
-                  if (password === confirmPassword) {
-                    setDisableSignInBtn(true);
-                    setDisableInputs(true);
-                    setIsDisabled(true);
-                    setOnSubmit(true);
-                    createUserWithEmailAndPassword(auth, email, password)
-                      .then((userCredential) => {
-                        setDisableSignInBtn(false);
-                        setDisableInputs(false);
-                        setIsDisabled(false);
-                        setOnSubmit(false);
-                        setUsername("");
-                        setEmail("");
-                        setPassword("");
-                        setConfirmPassword("");
-                        // const user = userCredential.user;
-                      })
-                      .catch((error) => {
-                        // const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.log(errorMessage);
-                      });
-                  } else {
-                    setShowFormErrorMsg("block");
-                    setFormErrorMessage("Passwords do not match.");
-                  }
-                }
-              }
+            onClick={() => {
+              console.log(handleSubmit(handleCreateUserAccount));
             }}
-            onSubmit={onSubmit}
           />
         </form>
-        <p className="text-xs text-gray-500 font-semibold mt-7">
+        <p className="text-xs text-gray-500 font-semibold mt-4">
           Have an account?{" "}
           <button
             onClick={() => {
+              clearErrors();
+              reset();
+
               slideToSignIn("translate-x-[0px]");
             }}
-            disabled={disableSignInBtn}
+            disabled={false}
             className="text-violet-500 hover:text-violet-800"
           >
             Sign in

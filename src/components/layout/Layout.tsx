@@ -1,50 +1,36 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-import { useBodyScrollLock } from "../../../utilities/lockscroll";
 import Header from "@/components/home/Header";
-import NavigationBar from "./navigation-bar/NavigationBar";
 import Suggestions from "./suggestions/Suggestions";
-import Authentication from "../authentication/Authentication";
-import CreateProfile from "../create-a-profile/CreateProfile";
+import NavigationBar from "./navigation-bar/NavigationBar";
+import { useBodyScrollLock } from "../../../utilities/lockscroll";
+import { ShowAuthenticationModalContext } from "@/pages/_app";
+import Authentication from "@/components/authentication/Authentication";
 
-function layout({ children }) {
+function layout({ children }: { children: JSX.Element }) {
   useBodyScrollLock();
-  const route = useRouter();
-  const [showAuthenticationModal, setShowAuthenticationModal] = useState(false);
+  const showAutheticationModal = useContext(ShowAuthenticationModalContext);
 
-  useEffect(() => {
-    if (route.route === "/") {
-      setShowAuthenticationModal(true);
-    }
-  }, [route.route]);
-  const [currentPageTitle, setCurrentPageTitle] = useState(
-    route.route.split("/")[1]
-  );
-  useEffect(() => {
-    if (route.route.split("/").length === 2) {
-      setCurrentPageTitle(route.route.split("/")[1]);
-    } else if (route.route.split("/").length === 3) {
-      setCurrentPageTitle(
-        route.route.split("/").slice(1).toString().replace(",", "-")
-      );
-    }
-  }, [route.route]);
   return (
-    <div className="h-[100vh] overflow-hidden">
-      <Head>
-        <title>{currentPageTitle}</title>
-      </Head>
-      <Header />
-      <main className="flex justify-between">
-        <NavigationBar />
-        {children}
-        <Suggestions />
-      </main>
-      {showAuthenticationModal && <Authentication />}
-      {/* <CreateProfile /> */}
-    </div>
+    <>
+      <div className="h-[100vh] overflow-hidden">
+        <Head>
+          <title>Threads</title>
+        </Head>
+        <Header />
+        <main className="flex justify-between">
+          <NavigationBar />
+          {children}
+          <Suggestions />
+        </main>
+      </div>
+      {showAutheticationModal?.showAuthenticationModal && <Authentication />}
+      {showAutheticationModal?.showAuthenticationModal && (
+        <div className="bg-black fixed left-0 right-0 top-0 bottom-0 opacity-100"></div>
+      )}
+    </>
   );
 }
 

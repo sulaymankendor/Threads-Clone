@@ -3,14 +3,14 @@ import ListedCommunity from "@/components/listed-community/ListedCommunity";
 
 function Communities() {
   useEffect(() => {
-    const k = document.getElementsByClassName(
+    const avatars = document.getElementsByClassName(
       "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
     );
-    for (let i = 0; i < k.length; i++) {
+    for (let i = 0; i < avatars.length; i++) {
       // @ts-ignore
-      k[i].style.width = "20px";
+      avatars[i].style.width = "20px";
       // @ts-ignore
-      k[i].style.height = "20px";
+      avatar[i].style.height = "20px";
     }
   }, []);
   return (

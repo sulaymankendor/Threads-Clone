@@ -1,13 +1,14 @@
 import { useState } from "react";
+import ShareIcon from "@mui/icons-material/Share";
 import { Avatar, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
-import ShareIcon from "@mui/icons-material/Share";
 
 import CommentSection from "../reusable-components/CommentSection";
 
 function Thread() {
-  const [showCommentSection, setShowCommentSection] = useState(false);
+  const [showCommentsSection, setShowCommentsSection] = useState(false);
+
   return (
     <>
       <div className="flex bg-zinc-900 w-[90%] rounded-md flex-col p-[13px] mb-9">
@@ -52,10 +53,10 @@ function Thread() {
             className="hover:bg-gray-700 text-gray-300 mr-2"
             title="comment"
             onClick={() => {
-              if (showCommentSection) {
-                setShowCommentSection(false);
+              if (showCommentsSection) {
+                setShowCommentsSection(false);
               } else {
-                setShowCommentSection(true);
+                setShowCommentsSection(true);
               }
             }}
           >
@@ -75,8 +76,11 @@ function Thread() {
         </p>
       </div>
       <div className="w-[90%]">
-        {showCommentSection && (
-          <CommentSection verticalMargin={"mt-[-23px] mb-4"} />
+        {showCommentsSection && (
+          <CommentSection
+            verticalMargin={"mt-[-23px] mb-4"}
+            closeShowCommentsSection={setShowCommentsSection}
+          />
         )}
       </div>
     </>

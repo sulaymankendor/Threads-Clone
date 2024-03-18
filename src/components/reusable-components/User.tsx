@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 
 function User() {
   return (
-    <div className="flex justify-between w-full mt-2 mb-8 items-center">
+    <div className="flex justify-between w-full mt-3 mb-7 items-center">
       <div className="flex items-center">
         <Avatar
           alt="Remy Sharp"
