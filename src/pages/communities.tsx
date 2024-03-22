@@ -2,17 +2,6 @@ import { useEffect } from "react";
 import ListedCommunity from "@/components/listed-community/ListedCommunity";
 
 function Communities() {
-  useEffect(() => {
-    const avatars = document.getElementsByClassName(
-      "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
-    );
-    for (let i = 0; i < avatars.length; i++) {
-      // @ts-ignore
-      avatars[i].style.width = "20px";
-      // @ts-ignore
-      avatars[i].style.height = "20px";
-    }
-  }, []);
   return (
     <section className="h-[91vh] overflow-y-scroll flex flex-col items-center w-full">
       <h1 className="text-white text-2xl font-bold w-[90%] my-8">
