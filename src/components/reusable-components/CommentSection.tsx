@@ -28,7 +28,8 @@ function CommentSection({
           />
           <LoadingButton
             //   loading
-            className="bg-violet-500 text-white rounded-full capitalize"
+            className="text-white capitalize"
+            sx={{ backgroundColor: "#8b5cf6", borderRadius: "9999px" }}
           >
             Post
           </LoadingButton>

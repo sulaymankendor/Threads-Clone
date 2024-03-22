@@ -38,7 +38,7 @@ function MyThread() {
             className="mt-[-40px]"
             title="delete"
           >
-            <DeleteIcon fontSize="inherit" className="fill-red-400" />
+            <DeleteIcon fontSize="inherit" />
           </IconButton>
         </div>
 
@@ -46,7 +46,13 @@ function MyThread() {
           <IconButton
             aria-label="like"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
             title="like"
             //it will be dynamic
           >
@@ -55,7 +61,13 @@ function MyThread() {
           <IconButton
             aria-label="comment"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
             title="comment"
             onClick={() => {
               if (showCommentSection) {
@@ -70,7 +82,13 @@ function MyThread() {
           <IconButton
             aria-label="share"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
             title="share"
           >
             <ShareIcon fontSize="small" />
