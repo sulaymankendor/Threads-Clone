@@ -12,7 +12,6 @@ function EditProfile() {
           <p className="text-gray-300 mt-[-19px]">Make any changes</p>
         </div>
         <div>
-          //image picker
           <Avatar
             alt="Remy Sharp"
             src="https://mui.com/static/images/avatar/1.jpg"

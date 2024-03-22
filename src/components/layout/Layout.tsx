@@ -9,7 +9,7 @@ import { useBodyScrollLock } from "../../../utilities/lockscroll";
 import { ShowAuthenticationModalContext } from "@/pages/_app";
 import Authentication from "@/components/authentication/Authentication";
 
-function layout({ children }: { children: JSX.Element }) {
+function Layout({ children }: { children: JSX.Element }) {
   useBodyScrollLock();
   const showAutheticationModal = useContext(ShowAuthenticationModalContext);
 
@@ -34,4 +34,4 @@ function layout({ children }: { children: JSX.Element }) {
   );
 }
 
-export default layout;
+export default Layout;
