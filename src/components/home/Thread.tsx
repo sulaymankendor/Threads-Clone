@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, colors, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
@@ -33,8 +33,14 @@ function Thread() {
           <IconButton
             aria-label="like"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
             title="like"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
             // it will be dynamic
             onClick={(e) => {
               console.log(e);
@@ -50,7 +56,13 @@ function Thread() {
           <IconButton
             aria-label="comment"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
             title="comment"
             onClick={() => {
               if (showCommentsSection) {
@@ -65,8 +77,14 @@ function Thread() {
           <IconButton
             aria-label="share"
             size="small"
-            className="hover:bg-gray-700 text-gray-300 mr-2"
+            className="mr-2"
             title="share"
+            sx={{
+              color: "#d1d5db",
+              ":hover": {
+                backgroundColor: "#494949",
+              },
+            }}
           >
             <ShareIcon fontSize="small" />
           </IconButton>

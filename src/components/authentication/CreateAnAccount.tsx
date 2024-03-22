@@ -147,7 +147,7 @@ function CreateAnAccount({
           </div>
           <ContinueButton
             onClick={() => {
-              console.log(handleSubmit(handleCreateUserAccount));
+              handleCreateUserAccount;
             }}
           />
         </form>

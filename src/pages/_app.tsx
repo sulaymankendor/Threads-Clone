@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Layout>
         </ShowOnBoardingModalContext.Provider>
       </ShowAuthenticationModalContext.Provider>
-      {showOnBoardingModal && <Onboarding />}
+      {/* {showOnBoardingModal && <Onboarding />} */}
       {/* <CreateProfile /> */}
     </>
   );
