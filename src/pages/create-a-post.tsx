@@ -11,7 +11,15 @@ function CreateAPost() {
 
       <LoadingButton
         // loading={true}
-        className="text-[16px] font-bold capitalize bg-violet-600 w-[90%] text-gray-200 hover:bg-violet-500 mt-8"
+        sx={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          textTransform: "capitalize",
+          color: "white",
+          width: "90%",
+          marginTop: "32px",
+        }}
+        style={{ backgroundColor: "#7c3aed" }}
       >
         Post Thread
       </LoadingButton>

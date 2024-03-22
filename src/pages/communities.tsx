@@ -10,7 +10,7 @@ function Communities() {
       // @ts-ignore
       avatars[i].style.width = "20px";
       // @ts-ignore
-      avatar[i].style.height = "20px";
+      avatars[i].style.height = "20px";
     }
   }, []);
   return (
