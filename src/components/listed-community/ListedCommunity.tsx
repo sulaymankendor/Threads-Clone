@@ -5,17 +5,17 @@ import { useEffect } from "react";
 const avatarWidthHeight = 20;
 
 function ListedCommunity() {
-  useEffect(() => {
-    const avatars = document.getElementsByClassName(
-      "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
-    );
-    for (let i = 0; i < avatars.length; i++) {
-      // @ts-ignore
-      avatars[i].style.width = "20px";
-      // @ts-ignore
-      avatars[i].style.height = "20px";
-    }
-  }, []);
+  // useEffect(() => {
+  //   const avatars = document.getElementsByClassName(
+  //     "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
+  //   );
+  //   for (let i = 0; i < avatars.length; i++) {
+  //     // @ts-ignore
+  //     avatars[i].style.width = "20px";
+  //     // @ts-ignore
+  //     avatars[i].style.height = "20px";
+  //   }
+  // }, []);
   return (
     <div className="bg-zinc-900 p-5 rounded w-[43%] ml-8 mb-6 ">
       <div className="flex items-center">
@@ -41,7 +41,12 @@ function ListedCommunity() {
           max={4}
           spacing="medium"
           renderSurplus={(surplus) => (
-            <span className="text-sm ml-[6px]">{surplus.toString()[0]}k</span>
+            <span
+              className="text-sm ml-[6px]"
+              style={{ width: "20px", height: "20px" }}
+            >
+              {surplus.toString()[0]}k
+            </span>
           )}
         >
           <Avatar
