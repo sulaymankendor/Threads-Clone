@@ -9,7 +9,8 @@ body {
   display: none;
 }
 
-.css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar {
+.MuiAvatarGroup-avatar {
   width: 20px !important;
   height: 20px !important;
+  background-color: "red" !important;
 }

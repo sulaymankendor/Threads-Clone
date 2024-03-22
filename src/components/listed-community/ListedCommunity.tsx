@@ -7,7 +7,7 @@ const avatarWidthHeight = 20;
 function ListedCommunity() {
   // useEffect(() => {
   //   const avatars = document.getElementsByClassName(
-  //     "css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar"
+  //     "c "
   //   );
   //   for (let i = 0; i < avatars.length; i++) {
   //     // @ts-ignore
@@ -47,27 +47,27 @@ function ListedCommunity() {
           <Avatar
             alt="Remy Sharp"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
+            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Travis Howard"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
+            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Cindy Baker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
+            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Agnes Walker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
+            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Trevor Henderson"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
+            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
         </AvatarGroup>
       </div>
