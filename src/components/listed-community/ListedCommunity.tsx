@@ -41,12 +41,7 @@ function ListedCommunity() {
           max={4}
           spacing="medium"
           renderSurplus={(surplus) => (
-            <span
-              className="text-sm ml-[6px]"
-              style={{ width: "20px", height: "20px" }}
-            >
-              {surplus.toString()[0]}k
-            </span>
+            <span className="text-sm ml-[6px]">{surplus.toString()[0]}k</span>
           )}
         >
           <Avatar

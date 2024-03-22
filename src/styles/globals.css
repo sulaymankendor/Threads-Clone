@@ -8,3 +8,8 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar {
+  width: 20px !important;
+  height: 20px !important;
+}
