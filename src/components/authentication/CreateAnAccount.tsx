@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
 import { Dispatch, SetStateAction, useContext } from "react";
 
 import {
@@ -16,14 +17,16 @@ import { createUserAccountSchema } from "../../../utilities/authenticationSchema
 import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
 import { useRouter } from "next/router";
 import { ShowOnBoardingModalContext } from "@/pages/_app";
+import { ShowAuthenticationModalContext } from "@/pages/_app";
 
 function CreateAnAccount({
   slideToSignIn,
 }: {
   slideToSignIn: Dispatch<SetStateAction<string>>;
 }) {
-  const router = useRouter();
+  const route = useRouter();
   const auth = getAuth(app);
+  const showAuthenticationModal = useContext(ShowAuthenticationModalContext);
   const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
   const {
     reset,
@@ -49,8 +52,9 @@ function CreateAnAccount({
         await updateProfile(user, {
           displayName: data.name,
         });
+        showAuthenticationModal?.setShowAuthenticationModal(false);
         showOnBoardingModal?.setShowOnBoardingModal(true);
-        router.push("/?Onboarding", undefined, { shallow: true });
+        route.push("/?Onboarding", undefined, { shallow: true });
       })
 
       .catch((error) => {

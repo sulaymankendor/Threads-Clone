@@ -7,8 +7,6 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 import CommentSection from "../reusable-components/CommentSection";
 
-const avatarWidthHeight = 20;
-
 function MyThread() {
   const [showCommentSection, setShowCommentSection] = useState(false);
 
@@ -108,27 +106,22 @@ function MyThread() {
           <Avatar
             alt="Remy Sharp"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Travis Howard"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Cindy Baker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Agnes Walker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Trevor Henderson"
             src="https://mui.com/static/images/avatar/1.jpg"
-            sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
         </AvatarGroup>
       </div>

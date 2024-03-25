@@ -2,20 +2,7 @@ import Link from "next/link";
 import { Avatar, AvatarGroup } from "@mui/material";
 import { useEffect } from "react";
 
-const avatarWidthHeight = 20;
-
 function ListedCommunity() {
-  // useEffect(() => {
-  //   const avatars = document.getElementsByClassName(
-  //     "c "
-  //   );
-  //   for (let i = 0; i < avatars.length; i++) {
-  //     // @ts-ignore
-  //     avatars[i].style.width = "20px";
-  //     // @ts-ignore
-  //     avatars[i].style.height = "20px";
-  //   }
-  // }, []);
   return (
     <div className="bg-zinc-900 p-5 rounded w-[43%] ml-8 mb-6 ">
       <div className="flex items-center">
@@ -47,27 +34,22 @@ function ListedCommunity() {
           <Avatar
             alt="Remy Sharp"
             src="https://mui.com/static/images/avatar/1.jpg"
-            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Travis Howard"
             src="https://mui.com/static/images/avatar/1.jpg"
-            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Cindy Baker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Agnes Walker"
             src="https://mui.com/static/images/avatar/1.jpg"
-            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
           <Avatar
             alt="Trevor Henderson"
             src="https://mui.com/static/images/avatar/1.jpg"
-            // sx={{ width: avatarWidthHeight, height: avatarWidthHeight }}
           />
         </AvatarGroup>
       </div>

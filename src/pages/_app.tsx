@@ -1,12 +1,17 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import { useState, createContext, SetStateAction, Dispatch } from "react";
+import {
+  useState,
+  createContext,
+  SetStateAction,
+  Dispatch,
+  useEffect,
+} from "react";
 
 import { app } from "../../lib/firebase-config";
 import Layout from "@/components/layout/Layout";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Onboarding from "@/components/reusable-components/Onboarding";
 
 export const ShowAuthenticationModalContext = createContext<{
   showAuthenticationModal: boolean;
@@ -20,17 +25,19 @@ export const ShowOnBoardingModalContext = createContext<{
 
 export default function App({ Component, pageProps }: AppProps) {
   const auth = getAuth(app);
-  const router = useRouter();
+  const route = useRouter();
   const [showOnBoardingModal, setShowOnBoardingModal] = useState(false);
   const [showAuthenticationModal, setShowAuthenticationModal] = useState(true);
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setShowAuthenticationModal(false);
-    } else {
-      setShowAuthenticationModal(true);
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setShowAuthenticationModal(false);
+      } else {
+        route.push("/?authentication", undefined, { shallow: true });
+        setShowAuthenticationModal(true);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -51,8 +58,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </Layout>
         </ShowOnBoardingModalContext.Provider>
       </ShowAuthenticationModalContext.Provider>
-      {/* {showOnBoardingModal && <Onboarding />} */}
-      {/* <CreateProfile /> */}
     </>
   );
 }

@@ -27,8 +27,9 @@ function SignIn({
       password: "",
     },
   });
-  const handleSignInUser: SubmitHandler<SignInFormInput> = (data) =>
-    console.log(data);
+  // const handleSignInUser: SubmitHandler<SignInFormInput> = (data) =>
+  //   console.log(data);
+
   return (
     <div className="flex flex-col w-[317px]">
       <ThreadsLogo />
@@ -39,7 +40,8 @@ function SignIn({
       </div>
       <p className="self-center mt-3">or</p>
       <div>
-        <form action="post" onSubmit={handleSubmit(handleSignInUser)}>
+        {/* <form action="post" onSubmit={handleSubmit(handleSignInUser)}> */}
+        <form action="psot">
           <div className="flex flex-col mb-5">
             <label className="text-xs font-semibold text-gray-500 mb-1">
               Email Address
