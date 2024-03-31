@@ -1,4 +1,3 @@
-import { Bold, Italic, Underline } from "lucide-react";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
