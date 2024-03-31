@@ -1,9 +1,9 @@
 import { Avatar } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { SpinnerButton } from "@/components/reusable-components/ContinueButtons";
 
 function EditProfile() {
   return (
-    <section className="w-full h-[92vh] overflow-y-scroll">
+    <section className="w-full overflow-y-scroll h-[92vh] pb-20">
       <section className="w-[96%] ml-7 mb-7">
         <div>
           <h1 className="text-white text-2xl font-bold w-[90%] my-8">
@@ -32,12 +32,7 @@ function EditProfile() {
             value={"I love Coding 🚀"}
             className="bg-zinc-900 text-gray-200 w-[90%] mt-2 rounded p-3 max-h-52 min-h-[208px] outline-none"
           />
-          <LoadingButton
-            // loading={true}
-            className="text-[17px] capitalize bg-violet-600 w-[90%] text-gray-200 hover:bg-violet-500 mt-8"
-          >
-            Continue
-          </LoadingButton>
+          <SpinnerButton />
         </div>
       </section>
     </section>

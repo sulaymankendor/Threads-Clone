@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -11,8 +12,8 @@ function MyThread() {
   const [showCommentSection, setShowCommentSection] = useState(false);
 
   return (
-    <div>
-      <div className="bg-zinc-900 w-[87%] rounded ml-12 flex p-6 my-7 flex-col mb-5">
+    <div className="w-[90%] mx-auto">
+      <div className="bg-zinc-900 rounded flex p-6 my-7 flex-col mb-5">
         <div className="flex items-center">
           <div className="flex items-center">
             <Avatar
@@ -125,7 +126,7 @@ function MyThread() {
           />
         </AvatarGroup>
       </div>
-      <div className="ml-12 w-[87%]">
+      <div>
         {showCommentSection && (
           <CommentSection
             verticalMargin={"mt-[0px] mb-4"}

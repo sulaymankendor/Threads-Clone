@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Avatar, AvatarGroup } from "@mui/material";
 import { useEffect } from "react";

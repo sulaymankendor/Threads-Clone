@@ -1,3 +1,4 @@
+"use client";
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 
@@ -5,36 +6,37 @@ import Header from "@/components/home/Header";
 import Suggestions from "./suggestions/Suggestions";
 import NavigationBar from "./navigation-bar/NavigationBar";
 import { useBodyScrollLock } from "../../../utilities/lockscroll";
+// import {
+//   ShowAuthenticationModalContext,
+//   ShowOnBoardingModalContext,
+// } from "@/pages/_app";
+// import Authentication from "@/components/authentication/Authentication";
+import { useRouter } from "next/navigation";
 import {
   ShowAuthenticationModalContext,
+  ShowDarkOverlayContext,
   ShowOnBoardingModalContext,
-} from "@/pages/_app";
-import Authentication from "@/components/authentication/Authentication";
+} from "../provider/Providers";
+import Authentication from "../authentication/Authentication";
 import Onboarding from "../reusable-components/Onboarding";
-import { useRouter } from "next/router";
 
-function Layout({ children }: { children: JSX.Element }) {
-  const route = useRouter();
+function Layout({ children }: { children: React.ReactNode }) {
   useBodyScrollLock();
   const showAutheticationModal = useContext(ShowAuthenticationModalContext);
   const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
+  const showDarkOverlay = useContext(ShowDarkOverlayContext);
+  console.log(showOnBoardingModal?.showOnBoardingModal);
   return (
     <>
-      <div className="h-[100vh] overflow-hidden">
-        <Head>
-          <title>Threads</title>
-        </Head>
+      <main className="h-[100vh] overflow-hidden">
         <Header />
-        <main className="flex justify-between">
+        <div className="flex justify-between">
           <NavigationBar />
-          {children}
+          <div className="w-[63vw]">{children}</div>
           <Suggestions />
-        </main>
-      </div>
-      {showAutheticationModal?.showAuthenticationModal && <Authentication />}
-      {/* {showOnBoardingModal?.showOnBoardingModal && <Onboarding />} */}
-      <Onboarding />
-      <div className="bg-black fixed left-0 right-0 top-0 bottom-0 opacity-100"></div>
+          {/* {showOnBoardingModal?.showOnBoardingModal && <Onboarding />} */}
+        </div>
+      </main>
     </>
   );
 }

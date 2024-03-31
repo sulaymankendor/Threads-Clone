@@ -1,4 +1,5 @@
-function ContinueButton({ onClick }: { onClick: any }) {
+"use client";
+export function ContinueButton({ onClick }: { onClick: any }) {
   return (
     <button
       className={
@@ -15,4 +16,16 @@ function ContinueButton({ onClick }: { onClick: any }) {
   );
 }
 
-export default ContinueButton;
+import LoadingButton from "@mui/lab/LoadingButton";
+import React from "react";
+
+export function SpinnerButton() {
+  return (
+    <LoadingButton
+      // loading={true}
+      className="text-[17px] capitalize bg-violet-600 w-[90%] text-gray-200 hover:bg-violet-500 mt-8"
+    >
+      Continue
+    </LoadingButton>
+  );
+}

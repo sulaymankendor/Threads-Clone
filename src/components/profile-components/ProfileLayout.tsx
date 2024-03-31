@@ -1,17 +1,17 @@
+"use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Avatar, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import { usePathname } from "next/navigation";
+import { ToggleButtonGroup } from "../reusable-components/ToggleGroup";
 
 const widthValue = 500;
 
 function ProfileLayout() {
-  const route = useRouter();
+  const pathName = usePathname();
+  const router = useRouter();
   const [alignment, setAlignment] = useState<string | null>("left");
   const [backgroundColorOfThreadsButton, setBackgroundColorOfThreadsButton] =
     useState("");
@@ -37,18 +37,18 @@ function ProfileLayout() {
   }, []);
 
   useEffect(() => {
-    if (route.asPath.split("/")[2] === "threads") {
+    if (pathName?.split("/")[2] === "threads") {
       setBackgroundColorOfThreadsButton("bg-gray-800 hover:bg-gray-800");
-    } else if (route.asPath.split("/")[2] === "replies") {
+    } else if (pathName?.split("/")[2] === "replies") {
       setBackgroundColorOfRepliesButton("bg-gray-800 hover:bg-gray-800");
-    } else if (route.asPath.split("/")[2] === "tagged") {
+    } else if (pathName?.split("/")[2] === "tagged") {
       setBackgroundColorOfTaggedButton("bg-gray-800 hover:bg-gray-800");
     }
-  }, [route.route]);
+  }, [pathName]);
 
   return (
     <div className="w-full">
-      <div className="w-full flex justify-between mt-9 items-center">
+      <div className="flex justify-between mt-9 items-center w-[92%] mx-auto">
         <div className="flex ml-12 items-center">
           <Avatar
             alt="Remy Sharp"
@@ -68,66 +68,10 @@ function ProfileLayout() {
           <p>Edit</p>
         </Link>
       </div>
-      <p className="text-gray-300 ml-12 my-4">Code + Design</p>
-      <div className="border-b-[1px] border-b-zinc-900 w-[87%] ml-12 mt-14"></div>
-      <div className="mt-10 ml-12 w-[87%]">
-        <ToggleButtonGroup
-          value={alignment}
-          exclusive
-          onChange={(
-            event: React.MouseEvent<HTMLElement>,
-            newAlignment: string | null
-          ) => {
-            setAlignment(newAlignment);
-          }}
-          aria-label="text alignment"
-          className="bg-zinc-900 w-full"
-          color="primary"
-          sx={{ width: 663, height: 35 }}
-        >
-          <Button
-            value="left"
-            aria-label="left aligned"
-            sx={{ width: widthValue, transition: "none" }}
-            className={`${backgroundColorOfThreadsButton} transition-none`}
-            onClick={() => {
-              route.replace("/profile/threads");
-            }}
-          >
-            <CommentOutlinedIcon className="text-gray-500 w-5" />
-            <p className="text-gray-300 capitalize ml-3">Threads</p>
-            <p
-              className="bg-zinc-600 px-1 ml-3 text-sm rounded-sm text-gray-400"
-              style={{ height: "19px" }}
-            >
-              1
-            </p>
-          </Button>
-          <Button
-            value="center"
-            aria-label="centered"
-            sx={{ width: widthValue }}
-            className={`${backgroundColorOfRepliesButton} transition-none`}
-            onClick={() => {
-              route.replace("/profile/replies");
-            }}
-          >
-            <PeopleOutlineIcon className="text-gray-500 w-5" />
-            <p className="text-gray-300 capitalize ml-2">Replies</p>
-          </Button>
-          <Button
-            value="right"
-            aria-label="right aligned"
-            sx={{ width: widthValue }}
-            className={`${backgroundColorOfTaggedButton} transition-none`}
-            onClick={() => {
-              route.replace("/profile/tagged");
-            }}
-          >
-            <LocalOfferOutlinedIcon className="text-gray-500 w-5" />
-            <p className="text-gray-300 capitalize ml-2">Tagged</p>
-          </Button>
-        </ToggleButtonGroup>
+      <p className="text-gray-300 ml-20 my-4">Code + Design</p>
+      <div className="border-b-[1px] border-b-zinc-900 w-[92%] mx-auto mt-14"></div>
+      <div className="mt-10 mx-auto w-[92%]">
+        <ToggleButtonGroup />
       </div>
     </div>
   );

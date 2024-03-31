@@ -1,4 +1,4 @@
-import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@/components/reusable-components/LoadingButton";
 
 function CreateAPost() {
   return (
@@ -9,20 +9,7 @@ function CreateAPost() {
       <label className="text-gray-200 w-[90%]">Content</label>
       <textarea className="bg-zinc-900 text-gray-200 w-[90%] mt-2 rounded p-3 max-h-52 min-h-[208px] outline-none" />
 
-      <LoadingButton
-        // loading={true}
-        sx={{
-          fontSize: "16px",
-          fontWeight: "bold",
-          textTransform: "capitalize",
-          color: "white",
-          width: "90%",
-          marginTop: "32px",
-        }}
-        style={{ backgroundColor: "#7c3aed" }}
-      >
-        Post Thread
-      </LoadingButton>
+      <Button />
     </section>
   );
 }

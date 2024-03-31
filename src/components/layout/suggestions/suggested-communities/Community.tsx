@@ -17,7 +17,7 @@ function Communities() {
       </div>
       <Link
         href={"/"}
-        className="text-sm transition-all bg-violet-500 hover:bg-violet-400 text-white px-5 py-1 rounded mr-3"
+        className="text-sm transition-all bg-violet-500 hover:bg-violet-400 text-white px-4 py-1 rounded mr-3"
       >
         View
       </Link>

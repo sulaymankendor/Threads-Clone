@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import ThreadsLogo from "@/svg/ThreadsLogo";
 import { SignInFormInput } from "../../../utilities/types";
-import ContinueButton from "../reusable-components/ContinueButton";
+import ContinueButton from "../reusable-components/ContinueButtons";
 import { signInUserSchema } from "../../../utilities/authenticationSchema";
 import { SubmitHandler } from "react-hook-form";
 import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";

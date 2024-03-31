@@ -12,19 +12,23 @@ import { app } from "../../../lib/firebase-config";
 import ThreadsLogo from "@/svg/ThreadsLogo";
 import { SubmitHandler } from "react-hook-form";
 import { CreateAccountFormInput } from "../../../utilities/types";
-import ContinueButton from "../reusable-components/ContinueButton";
+import ContinueButton from "../reusable-components/ContinueButtons";
 import { createUserAccountSchema } from "../../../utilities/authenticationSchema";
 import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
 import { useRouter } from "next/router";
-import { ShowOnBoardingModalContext } from "@/pages/_app";
-import { ShowAuthenticationModalContext } from "@/pages/_app";
+import {
+  ShowAuthenticationModalContext,
+  ShowOnBoardingModalContext,
+} from "../provider/Providers";
+// import { ShowOnBoardingModalContext } from "@/pages/_app";
+// import { ShowAuthenticationModalContext } from "@/pages/_app";
 
 function CreateAnAccount({
   slideToSignIn,
 }: {
   slideToSignIn: Dispatch<SetStateAction<string>>;
 }) {
-  const route = useRouter();
+  // const route = useRouter();
   const auth = getAuth(app);
   const showAuthenticationModal = useContext(ShowAuthenticationModalContext);
   const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
@@ -54,7 +58,7 @@ function CreateAnAccount({
         });
         showAuthenticationModal?.setShowAuthenticationModal(false);
         showOnBoardingModal?.setShowOnBoardingModal(true);
-        route.push("/?Onboarding", undefined, { shallow: true });
+        // route.push("/?Onboarding", undefined, { shallow: true });
       })
 
       .catch((error) => {

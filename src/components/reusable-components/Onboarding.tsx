@@ -1,3 +1,4 @@
+"use client";
 // @ts-ignore
 import { v4 } from "uuid";
 import { useEffect, useState } from "react";
@@ -6,7 +7,6 @@ import Dropzone from "react-dropzone";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { app } from "../../../lib/firebase-config";
-import { Camera } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 function Onboarding() {
@@ -29,7 +29,7 @@ function Onboarding() {
   }, [profilePictureToUpload]);
 
   return (
-    <div className="z-10 fixed top-[7vh] left-[30vw] w-[530px] overflow-x-hidden">
+    <div className="z-10 fixed top-[vh] left-[30vw] w-[530px] overflow-x-hidden">
       <h1 className="text-gray-200 font-bold text-2xl">Onboarding</h1>
       <h3 className="text-gray-200 text-sm">
         Complete your profile now, to use Threads.
@@ -44,7 +44,7 @@ function Onboarding() {
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps()}
-                className="cursor-pointer w-40 h-40 relative border-[1.5px] border-gray-200 rounded-full p-1"
+                className="cursor-pointer w-36 h-36 relative border-[1.5px] border-gray-200 rounded-full p-1"
                 onMouseOver={() => {
                   setShowShadow(true);
                 }}
@@ -70,7 +70,7 @@ function Onboarding() {
               </div>
             )}
           </Dropzone>
-          {previewProfilePicture ? (
+          {previewProfilePicture && (
             <Button
               onClick={() => {
                 setPreviewProfilePicture(undefined);
@@ -84,10 +84,6 @@ function Onboarding() {
             >
               use default profile picture
             </Button>
-          ) : (
-            <p className="text-gray-400 font-light my-3">
-              Click the image to select a profile picture
-            </p>
           )}
         </div>
         <div className="flex flex-col ml-2 w-[95%]">
