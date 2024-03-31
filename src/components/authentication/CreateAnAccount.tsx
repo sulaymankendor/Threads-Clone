@@ -12,7 +12,6 @@ import { app } from "../../../lib/firebase-config";
 import ThreadsLogo from "@/svg/ThreadsLogo";
 import { SubmitHandler } from "react-hook-form";
 import { CreateAccountFormInput } from "../../../utilities/types";
-import ContinueButton from "../reusable-components/ContinueButtons";
 import { createUserAccountSchema } from "../../../utilities/authenticationSchema";
 import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWithGithubOrGoogleButton";
 import { useRouter } from "next/router";
@@ -20,6 +19,7 @@ import {
   ShowAuthenticationModalContext,
   ShowOnBoardingModalContext,
 } from "../provider/Providers";
+import { ContinueButton } from "../reusable-components/ContinueButtons";
 // import { ShowOnBoardingModalContext } from "@/pages/_app";
 // import { ShowAuthenticationModalContext } from "@/pages/_app";
 
