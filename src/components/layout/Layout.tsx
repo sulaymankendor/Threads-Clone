@@ -25,7 +25,6 @@ function Layout({ children }: { children: React.ReactNode }) {
   const showAutheticationModal = useContext(ShowAuthenticationModalContext);
   const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
   const showDarkOverlay = useContext(ShowDarkOverlayContext);
-  console.log(showOnBoardingModal?.showOnBoardingModal);
   return (
     <>
       <main className="h-[100vh] overflow-hidden">
