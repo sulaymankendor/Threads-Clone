@@ -54,7 +54,7 @@ function Onboarding() {
   }, [profilePictureToUpload, bio]);
   useEffect(() => {
     showDarkOverlay?.setShowDarkOverlay(false);
-  }, []);
+  });
   const docRef = doc(db, "users", auth.currentUser?.uid);
 
   return (

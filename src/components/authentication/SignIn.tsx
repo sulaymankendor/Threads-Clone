@@ -124,7 +124,7 @@ function SignIn({
           </div>
         )}
         <p className="text-xs text-gray-500 font-semibold mt-7">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <button
             onClick={() => {
               clearErrors();
