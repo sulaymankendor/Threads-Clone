@@ -61,7 +61,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         setShowDarkOverlay(true);
       }
     });
-  }, [pathname, auth, db]);
+  }, [pathname, auth, db, showOnBoardingModal]);
   return (
     <ShowAuthenticationModalContext.Provider
       value={{
