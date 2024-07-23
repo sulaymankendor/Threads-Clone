@@ -55,8 +55,6 @@ function Onboarding() {
   useEffect(() => {
     showDarkOverlay?.setShowDarkOverlay(false);
   });
-  const docRef = doc(db, "users", auth.currentUser?.uid);
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -131,13 +129,16 @@ function Onboarding() {
                   .then((snapshot) => {
                     setNetworkErrorMsg("");
                     getDownloadURL(snapshot.ref).then(async (url) => {
-                      await setDoc(docRef, {
-                        uid: auth.currentUser?.uid,
-                        name: auth.currentUser?.displayName,
-                        email: auth.currentUser?.email,
-                        profilePicture: url,
-                        bio: bio,
-                      });
+                      if (auth.currentUser?.uid) {
+                        const docRef = doc(db, "users", auth.currentUser?.uid);
+                        await setDoc(docRef, {
+                          uid: auth.currentUser?.uid,
+                          name: auth.currentUser?.displayName,
+                          email: auth.currentUser?.email,
+                          profilePicture: url,
+                          bio: bio,
+                        });
+                      }
                       showOnBoardingModal?.setShowOnBoardingModal(false);
                       setIsSubmittingUserPhotoAndBio(false);
                     });
