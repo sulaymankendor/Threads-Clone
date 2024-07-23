@@ -1,5 +1,4 @@
 import { Avatar } from "@mui/material";
-import { SpinnerButton } from "@/components/reusable-components/ContinueButtons";
 
 function EditProfile() {
   return (
@@ -32,7 +31,6 @@ function EditProfile() {
             value={"I love Coding 🚀"}
             className="bg-zinc-900 text-gray-200 w-[90%] mt-2 rounded p-3 max-h-52 min-h-[208px] outline-none"
           />
-          <SpinnerButton />
         </div>
       </section>
     </section>
