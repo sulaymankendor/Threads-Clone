@@ -19,6 +19,9 @@ import {
 } from "../provider/Providers";
 import Authentication from "../authentication/Authentication";
 import Onboarding from "../reusable-components/Onboarding";
+import { CircularProgress, LinearProgress } from "@mui/material";
+import ThreadsLogo from "@/svg/ThreadsLogo";
+import PageLoadingUI from "./pageLoadingUI/PageLoadingUI";
 
 function Layout({ children }: { children: React.ReactNode }) {
   useBodyScrollLock();
@@ -33,11 +36,14 @@ function Layout({ children }: { children: React.ReactNode }) {
           <NavigationBar />
           <div className="w-[63vw]">{children}</div>
           <Suggestions />
-          {/* {showOnBoardingModal?.showOnBoardingModal && <Onboarding />} */}
+          {showAutheticationModal?.showAuthenticationModal && (
+            <Authentication />
+          )}
+          {showOnBoardingModal?.showOnBoardingModal && <Onboarding />}
         </div>
+        {showDarkOverlay?.showDarkOverlay && <PageLoadingUI />}
       </main>
     </>
   );
 }
-
 export default Layout;

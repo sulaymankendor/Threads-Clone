@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 
 import {
   createUserWithEmailAndPassword,
@@ -17,9 +17,12 @@ import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWi
 import { useRouter } from "next/router";
 import {
   ShowAuthenticationModalContext,
+  ShowDarkOverlayContext,
   ShowOnBoardingModalContext,
 } from "../provider/Providers";
 import { ContinueButton } from "../reusable-components/ContinueButtons";
+import NetworkErrorSVG from "@/svg/NetworkErrorSVG";
+import EmailAlreadyExistSVG from "@/svg/EmailAlreadyExistSVG";
 // import { ShowOnBoardingModalContext } from "@/pages/_app";
 // import { ShowAuthenticationModalContext } from "@/pages/_app";
 
@@ -30,8 +33,14 @@ function CreateAnAccount({
 }) {
   // const route = useRouter();
   const auth = getAuth(app);
+  const showDarkOverlay = useContext(ShowDarkOverlayContext);
   const showAuthenticationModal = useContext(ShowAuthenticationModalContext);
   const showOnBoardingModal = useContext(ShowOnBoardingModalContext);
+  const [isSubmittingUserInfo, setIsSubmittingUserInfo] = useState(false);
+  const [networkErrorMsg, setNetworkErrorMsg] = useState("");
+  const [emailAlreadyExistErrorMsg, setEmailAlreadyExistErrorMsg] =
+    useState("");
+
   const {
     reset,
     clearErrors,
@@ -50,12 +59,17 @@ function CreateAnAccount({
   const handleCreateUserAccount: SubmitHandler<CreateAccountFormInput> = (
     data
   ) => {
+    setIsSubmittingUserInfo(true);
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         await updateProfile(user, {
           displayName: data.name,
         });
+        setEmailAlreadyExistErrorMsg("");
+        setNetworkErrorMsg("");
+        setIsSubmittingUserInfo(false);
+        showDarkOverlay?.setShowDarkOverlay(true);
         showAuthenticationModal?.setShowAuthenticationModal(false);
         showOnBoardingModal?.setShowOnBoardingModal(true);
         // route.push("/?Onboarding", undefined, { shallow: true });
@@ -64,12 +78,21 @@ function CreateAnAccount({
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if (errorMessage.includes("(auth/email-already-in-use)")) {
+          setNetworkErrorMsg("");
+          setEmailAlreadyExistErrorMsg("Email already in use");
+        } else if (errorMessage.includes("(auth/network-request-failed)")) {
+          setEmailAlreadyExistErrorMsg("");
+          setNetworkErrorMsg(
+            "Request failed, please check you network and try again."
+          );
+        }
+        setIsSubmittingUserInfo(false);
       });
   };
 
   return (
-    <div className="flex flex-col w-[312px] mt-[-30px] h-[666px] overflow-y-scroll">
-      <ThreadsLogo />
+    <div className="flex flex-col w-[44%] pb-7 h-full overflow-y-scroll">
       <h1 className="font-bold ">Create an Account</h1>
       <p className="text-gray-500 text-sm">to continue to Threads</p>
       <div className="flex flex-col mt-5">
@@ -114,6 +137,14 @@ function CreateAnAccount({
                 {errors.email.message}
               </p>
             )}
+            {emailAlreadyExistErrorMsg && (
+              <div className="flex items-center mt-3">
+                <EmailAlreadyExistSVG />
+                <p className="text-xs font-semibold text-red-500">
+                  {emailAlreadyExistErrorMsg}
+                </p>
+              </div>
+            )}
           </div>
           <div className="flex flex-col mb-5">
             <label className="text-xs font-semibold text-gray-500 mb-1">
@@ -153,19 +184,22 @@ function CreateAnAccount({
               </p>
             )}
           </div>
-          <ContinueButton
-            onClick={() => {
-              handleCreateUserAccount;
-            }}
-          />
+          <ContinueButton isSubmittingUserInfo={isSubmittingUserInfo} />
         </form>
+        {networkErrorMsg && (
+          <div className="flex items-center mt-4">
+            <NetworkErrorSVG />
+            <p className="text-xs font-bold text-red-600">{networkErrorMsg}</p>
+          </div>
+        )}
         <p className="text-xs text-gray-500 font-semibold mt-4">
           Have an account?{" "}
           <button
             onClick={() => {
               clearErrors();
               reset();
-
+              setEmailAlreadyExistErrorMsg("");
+              setNetworkErrorMsg("");
               slideToSignIn("translate-x-[0px]");
             }}
             disabled={false}
