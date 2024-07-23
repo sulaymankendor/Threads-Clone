@@ -11,7 +11,7 @@ function Authentication() {
   const showDarkOverlay = useContext(ShowDarkOverlayContext);
   useEffect(() => {
     showDarkOverlay?.setShowDarkOverlay(false);
-  }, []);
+  });
   return (
     <>
       <div className="rounded-2xl bg-white fixed top-[1.5vh] left-[30vw] z-20 w-[40vw] pt-11 pl-14 overflow-hidden h-[90vh]">
