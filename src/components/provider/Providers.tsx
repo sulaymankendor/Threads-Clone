@@ -12,7 +12,8 @@ import {
 import { usePathname } from "next/navigation";
 import { app } from "../../../lib/firebase-config";
 import { useParams } from "next/navigation";
-import { doc, getFirestore, getDoc } from "firebase/firestore";
+import { doc, getFirestore, getDoc, DocumentData } from "firebase/firestore";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const ShowDarkOverlayContext = createContext<{
   showDarkOverlay: boolean;
@@ -28,21 +29,47 @@ export const ShowOnBoardingModalContext = createContext<{
   setShowOnBoardingModal: Dispatch<SetStateAction<boolean>>;
 } | null>(null);
 
-export const CurrentAuthUserProfilePicContext = createContext<{
-  currentAuthUserProfilePic: string;
-  setCurrentAuthUserProfilePic: Dispatch<SetStateAction<string>>;
+export const CurrentAuthUserInfoContext = createContext<{
+  currentAuthUserInfo:
+    | DocumentData
+    | {
+        uid: string;
+        name: string;
+        email: string;
+        bio: string;
+        profilePicture: string;
+      };
+  setCurrentAuthUserInfo: Dispatch<SetStateAction<DocumentData>>;
 } | null>(null);
+
+export const RouterContext = createContext<AppRouterInstance | null>(null);
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const auth = getAuth(app);
   const db = getFirestore(app);
   const route = useRouter();
   const pathname = usePathname();
-  const [currentAuthUserProfilePic, setCurrentAuthUserProfilePic] =
-    useState("");
+  const router = useRouter();
   const [showDarkOverlay, setShowDarkOverlay] = useState(true);
   const [showOnBoardingModal, setShowOnBoardingModal] = useState(false);
   const [showAuthenticationModal, setShowAuthenticationModal] = useState(false);
+  const [currentAuthUserInfo, setCurrentAuthUserInfo] = useState<
+    | DocumentData
+    | {
+        uid: string;
+        name: string;
+        email: string;
+        bio: string;
+        profilePicture: string;
+      }
+  >({
+    uid: "",
+    name: "",
+    email: "",
+    bio: "",
+    profilePicture: "",
+  });
+
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -50,7 +77,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         setShowDarkOverlay(false);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setCurrentAuthUserProfilePic(docSnap.data().profilePicture);
+          setCurrentAuthUserInfo(docSnap.data());
+          // console.log(docSnap.data());
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
@@ -63,28 +91,30 @@ export function Providers({ children }: { children: React.ReactNode }) {
     });
   }, [pathname, auth, db, showOnBoardingModal]);
   return (
-    <ShowAuthenticationModalContext.Provider
-      value={{
-        showAuthenticationModal,
-        setShowAuthenticationModal,
-      }}
-    >
-      <ShowOnBoardingModalContext.Provider
+    <RouterContext.Provider value={router}>
+      <ShowAuthenticationModalContext.Provider
         value={{
-          showOnBoardingModal,
-          setShowOnBoardingModal,
+          showAuthenticationModal,
+          setShowAuthenticationModal,
         }}
       >
-        <ShowDarkOverlayContext.Provider
-          value={{ showDarkOverlay, setShowDarkOverlay }}
+        <ShowOnBoardingModalContext.Provider
+          value={{
+            showOnBoardingModal,
+            setShowOnBoardingModal,
+          }}
         >
-          <CurrentAuthUserProfilePicContext.Provider
-            value={{ currentAuthUserProfilePic, setCurrentAuthUserProfilePic }}
+          <ShowDarkOverlayContext.Provider
+            value={{ showDarkOverlay, setShowDarkOverlay }}
           >
-            {children}
-          </CurrentAuthUserProfilePicContext.Provider>
-        </ShowDarkOverlayContext.Provider>
-      </ShowOnBoardingModalContext.Provider>
-    </ShowAuthenticationModalContext.Provider>
+            <CurrentAuthUserInfoContext.Provider
+              value={{ currentAuthUserInfo, setCurrentAuthUserInfo }}
+            >
+              {children}
+            </CurrentAuthUserInfoContext.Provider>
+          </ShowDarkOverlayContext.Provider>
+        </ShowOnBoardingModalContext.Provider>
+      </ShowAuthenticationModalContext.Provider>
+    </RouterContext.Provider>
   );
 }

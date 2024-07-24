@@ -12,9 +12,10 @@ import {
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../../../lib/firebase-config";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
+import { CurrentAuthUserInfoContext } from "../provider/Providers";
 
 function AlertPopUp({
   openAlertPopup,
@@ -26,6 +27,7 @@ function AlertPopUp({
   const auth = getAuth(app);
   const [isLoggingOutCurrentAuthUser, setIsLoggingOutCurrentAuthUser] =
     useState(false);
+  const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
 
   return (
     <>
@@ -53,6 +55,13 @@ function AlertPopUp({
                 signOut(auth)
                   .then(() => {
                     // Sign-out successful.
+                    currentAuthUserInfo?.setCurrentAuthUserInfo({
+                      uid: "",
+                      name: "",
+                      email: "",
+                      bio: "",
+                      profilePicture: "",
+                    });
                     setIsLoggingOutCurrentAuthUser(false);
                     setOpenAlertPopup(false);
                   })

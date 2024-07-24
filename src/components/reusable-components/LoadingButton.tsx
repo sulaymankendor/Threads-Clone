@@ -1,10 +1,20 @@
 "use client";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-function Button() {
+function Button({
+  createThread,
+  iscreatingThread,
+  disabled,
+}: {
+  createThread: () => void;
+  iscreatingThread: boolean;
+  disabled: boolean;
+}) {
   return (
     <LoadingButton
-      // loading={true}
+      disabled={disabled}
+      onClick={createThread}
+      loading={iscreatingThread}
       sx={{
         fontSize: "16px",
         fontWeight: "bold",

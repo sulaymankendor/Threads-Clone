@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Avatar, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { usePathname } from "next/navigation";
+import { CurrentAuthUserInfoContext } from "@/components/provider/Providers";
 import { ToggleButtonGroup } from "../reusable-components/ToggleGroup";
 
 const widthValue = 500;
@@ -19,6 +20,7 @@ function ProfileLayout() {
     useState("");
   const [backgroundColorOfTaggedButton, setBackgroundColorOfTaggedButton] =
     useState("");
+  const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
 
   useEffect(() => {
     const listOfUsersComments = document.getElementsByClassName(
@@ -52,12 +54,14 @@ function ProfileLayout() {
         <div className="flex ml-12 items-center">
           <Avatar
             alt="Remy Sharp"
-            src="https://mui.com/static/images/avatar/1.jpg"
+            src={currentAuthUserInfo?.currentAuthUserInfo.profilePicture}
             sx={{ width: 60, height: 60 }}
           />
           <div className="ml-2">
-            <p className="text-gray-200 font-bold">Jerry Smith</p>
-            <p className="text-gray-500 text-sm">@smith</p>
+            <p className="text-gray-200 font-bold capitalize">
+              {currentAuthUserInfo?.currentAuthUserInfo.name}
+            </p>
+            {/* <p className="text-gray-500 text-sm">@smith</p> */}
           </div>
         </div>
         <Link
@@ -68,7 +72,9 @@ function ProfileLayout() {
           <p>Edit</p>
         </Link>
       </div>
-      <p className="text-gray-300 ml-20 my-4">Code + Design</p>
+      <p className="text-gray-300 ml-20 my-4 capitalize">
+        {currentAuthUserInfo?.currentAuthUserInfo.bio}
+      </p>
       <div className="border-b-[1px] border-b-zinc-900 w-[92%] mx-auto mt-14"></div>
       <div className="mt-10 mx-auto w-[92%]">
         <ToggleButtonGroup />
