@@ -1,39 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar, AvatarGroup, IconButton } from "@mui/material";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
-
 import CommentSection from "../reusable-components/CommentSection";
 
-function MyThread() {
+function MyThread({
+  content,
+  profilePicture,
+  author,
+  createdAt,
+}: {
+  profilePicture: string;
+  content: string;
+  author: string;
+  createdAt: any;
+}) {
   const [showCommentSection, setShowCommentSection] = useState(false);
-
   return (
-    <div className="w-[90%] mx-auto">
-      <div className="bg-zinc-900 rounded flex p-6 my-7 flex-col mb-5">
-        <div className="flex items-center">
+    <div className="w-[90%] mx-auto py-9">
+      <div className="bg-zinc-900 rounded flex p-6 -mt-2 flex-col">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Avatar
               alt="Remy Sharp"
-              src="https://mui.com/static/images/avatar/1.jpg"
+              src={profilePicture}
               className="self-start"
               sx={{ width: 45, height: 45 }}
             />
             <div className="ml-2">
-              <p className="text-white text-md">Jerry Smith</p>
-              <p className="text-gray-300 text-sm w-[90%]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-              </p>
+              <p className="text-white text-md capitalize">{author}</p>
+              <p className="text-gray-300 text-sm">{content}</p>
             </div>
           </div>
           <IconButton
             aria-label="delete"
             size="small"
-            color="primary"
+            color="error"
             className="mt-[-40px]"
             title="delete"
           >

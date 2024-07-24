@@ -43,6 +43,7 @@ function CreateAPost() {
           disabled={disabled}
           createThread={() =>
             createThread(
+              setContent,
               content,
               currentAuthUserInfo?.currentAuthUserInfo.profilePicture,
               currentAuthUserInfo?.currentAuthUserInfo.name,

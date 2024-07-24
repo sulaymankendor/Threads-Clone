@@ -1,16 +1,17 @@
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
 
-function ThreadSkeleton() {
+function ThreadSkeleton({ marginTop }: { marginTop?: string }) {
   return (
     <Stack
       spacing={1}
       sx={{
-        width: "90%",
+        width: "100%",
         backgroundColor: "#18181b",
         padding: "13px",
         borderRadius: "6px",
         marginBottom: "2.25rem",
+        marginTop: `${marginTop ? marginTop : ""}`,
       }}
     >
       <div className="flex">

@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 const auth = getAuth();
 const db = getFirestore(app);
 export const createThread = async (
+  setContent: Dispatch<SetStateAction<string>>,
   content: string,
   profilePicture: string,
   author: string,
@@ -36,8 +37,22 @@ export const createThread = async (
           createdAt: serverTimestamp(),
         })
           .then(() => {
-            toast.success("Successfully created a Thread");
-            setIsCreatingThread(false);
+            const homeThreads = doc(db, "homeThreads", uuidv4());
+            setDoc(homeThreads, {
+              profilePicture,
+              content,
+              author,
+              createdAt: serverTimestamp(),
+            })
+              .then(() => {
+                setContent("");
+                toast.success("Successfully created a Thread");
+                setIsCreatingThread(false);
+              })
+              .catch((error) => {
+                console.error("Error writing document: ", error.message);
+                setIsCreatingThread(false);
+              });
             // You can perform additional actions here
           })
           .catch((error) => {

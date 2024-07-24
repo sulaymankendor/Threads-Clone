@@ -7,6 +7,7 @@ import { getAuth } from "firebase/auth";
 import {
   collection,
   doc,
+  getDocs,
   getFirestore,
   onSnapshot,
   query,
@@ -30,35 +31,27 @@ export default function Home() {
     | []
   >([]);
   useEffect(() => {
-    if (auth.currentUser?.uid) {
-      const allThreads = doc(db, "allThreads", auth.currentUser.uid);
-      const thread = collection(allThreads, "threadList");
-      const q = query(thread);
-
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const docs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        //@ts-ignore
-        setThreads(docs);
-      });
-      // Cleanup listener on unmount
-      return () => unsubscribe();
-    }
+    const homeThreads = collection(db, "homeThreads");
+    const unsubscribe = onSnapshot(homeThreads, (snapshot) => {
+      const docs = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //@ts-ignore
+      setThreads(docs);
+    });
+    // Cleanup listener on unmount
+    return () => unsubscribe();
   });
   return (
     <section className="h-[91vh] overflow-y-scroll flex flex-col items-center w-full">
       <h1 className="text-white text-2xl font-bold w-[90%] my-8">Home</h1>
       {threads.length === 0 ? (
-        <>
-          <ThreadSkeleton />
-          <ThreadSkeleton />
-          <ThreadSkeleton />
-          <ThreadSkeleton />
-          <ThreadSkeleton />
-          <ThreadSkeleton />
-        </>
+        <div className="w-[90%]">
+          {[...Array(5)].map((_, index) => (
+            <ThreadSkeleton key={index} />
+          ))}
+        </div>
       ) : (
         <>
           {threads.map((thread) => {
