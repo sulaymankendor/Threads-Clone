@@ -2,7 +2,14 @@ import { getAuth } from "firebase/auth";
 //@ts-ignore
 import { v4 as uuidv4 } from "uuid";
 import { app } from "../lib/firebase-config";
-import { doc, getFirestore, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 const auth = getAuth();
@@ -15,23 +22,34 @@ export const createThread = async (
 ) => {
   setIsCreatingThread(true);
   if (auth.currentUser?.uid) {
-    setDoc(doc(db, auth.currentUser?.uid, uuidv4()), {
-      profilePicture,
-      content,
-      author,
+    const allThreads = doc(db, "allThreads", auth.currentUser.uid);
+    setDoc(allThreads, {
       createdAt: serverTimestamp(),
+      description: "This document contains all threads.",
     })
       .then(() => {
-        toast.success("Successfully created a Thread");
-        setIsCreatingThread(false);
-        // You can perform additional actions here
+        const thread = collection(allThreads, "threadList");
+        addDoc(thread, {
+          profilePicture,
+          content,
+          author,
+          createdAt: serverTimestamp(),
+        })
+          .then(() => {
+            toast.success("Successfully created a Thread");
+            setIsCreatingThread(false);
+            // You can perform additional actions here
+          })
+          .catch((error) => {
+            alert("something happened");
+            setIsCreatingThread(false);
+            console.error("Error writing document: ", error.message);
+            setIsCreatingThread(false);
+            // Handle the error, e.g., show it to the user
+          });
       })
       .catch((error) => {
-        alert("something happened");
-        setIsCreatingThread(false);
-        console.error("Error writing document: ", error.message);
-        setIsCreatingThread(false);
-        // Handle the error, e.g., show it to the user
+        console.log(error);
       });
   }
 };

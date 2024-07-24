@@ -26,7 +26,7 @@ function Thread({
           <Avatar alt="Remy Sharp" src={profilePicture} />
           <div className="ml-4">
             <p className="text-white">{author}</p>
-            <p className="text-gray-300 text-sm w-[98%] mt-1">{content}</p>
+            <p className="text-gray-300 text-sm mt-1">{content}</p>
           </div>
         </div>
 

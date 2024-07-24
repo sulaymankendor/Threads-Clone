@@ -4,7 +4,13 @@ import Thread from "@/components/home/Thread";
 import { useEffect, useState } from "react";
 import { app } from "../../../lib/firebase-config";
 import { getAuth } from "firebase/auth";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getFirestore,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import ThreadSkeleton from "../reusable-components/ThreadSkeleton";
 
 // This is a Client Component (same as components in the `pages` directory)
@@ -25,17 +31,18 @@ export default function Home() {
   >([]);
   useEffect(() => {
     if (auth.currentUser?.uid) {
-      const unsubscribe = onSnapshot(
-        collection(db, auth.currentUser.uid),
-        (snapshot) => {
-          const docs = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          //@ts-ignore
-          setThreads(docs);
-        }
-      );
+      const allThreads = doc(db, "allThreads", auth.currentUser.uid);
+      const thread = collection(allThreads, "threadList");
+      const q = query(thread);
+
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const docs = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        //@ts-ignore
+        setThreads(docs);
+      });
       // Cleanup listener on unmount
       return () => unsubscribe();
     }
