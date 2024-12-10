@@ -1,10 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAtzCSWZI_g-n2quLHWVkY9GYgPhorAuHQ",
   authDomain: "threads-web-app.firebaseapp.com",
@@ -17,4 +14,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Conditionally initialize Analytics
+isSupported()
+  .then((supported) => {
+    if (supported) {
+      const analytics = getAnalytics(app);
+      console.log("Analytics initialized");
+    } else {
+      console.warn("Analytics is not supported in this environment.");
+    }
+  })
+  .catch((error) => {
+    console.error("Error checking analytics support:", error);
+  });
