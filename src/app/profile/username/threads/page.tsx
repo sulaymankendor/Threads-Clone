@@ -48,7 +48,7 @@ function Threads() {
       // Cleanup listener on unmount
       return () => unsubscribe();
     }
-  }, []);
+  }, [auth?.currentUser?.uid, db]);
   console.log(auth.currentUser?.uid);
 
   if (noThreads) {
