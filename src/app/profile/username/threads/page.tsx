@@ -49,16 +49,18 @@ function Threads() {
       return () => unsubscribe();
     }
   }, [auth?.currentUser?.uid, db]);
-  console.log(auth.currentUser?.uid);
 
   if (noThreads) {
     return (
       <section className="flex flex-col w-full">
-        <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
+        {/* <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
           👋 Welcome! It looks like you haven't created any Threads yet. ✍️
           Start sharing your thoughts and experiences with the community by
           clicking 'Create Thread'. We're excited to see what you have to share!
           🚀
+        </p> */}
+        <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
+          {`👋 Welcome! It looks like you haven't created any Threads yet. ✍️ Start sharing your thoughts and experiences with the community by clicking 'Create Thread'. We're excited to see what you have to share! 🚀`}
         </p>
       </section>
     );
