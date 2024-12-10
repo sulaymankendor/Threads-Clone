@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-import ThreadsLogo from "@/svg/ThreadsLogo";
 import { SignInFormInput } from "../../../utilities/types";
 import { signInUserSchema } from "../../../utilities/authenticationSchema";
 import { SubmitHandler } from "react-hook-form";
@@ -11,7 +10,10 @@ import ContinueWithGithubAndGoogleButton from "../reusable-components/ContinueWi
 import { ContinueButton } from "../reusable-components/ContinueButtons";
 import LockSVG from "@/svg/LockSVG";
 import NetworkErrorSVG from "@/svg/NetworkErrorSVG";
-import { ShowAuthenticationModalContext } from "../provider/Providers";
+import {
+  RouterContext,
+  ShowAuthenticationModalContext,
+} from "../provider/Providers";
 
 function SignIn({
   slideToSignUp,

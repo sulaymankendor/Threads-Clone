@@ -13,6 +13,7 @@ function ThreadSkeleton({ marginTop }: { marginTop?: string }) {
         marginBottom: "2.25rem",
         marginTop: `${marginTop ? marginTop : ""}`,
       }}
+      className="max-sm:rounded-none"
     >
       <div className="flex">
         <Skeleton

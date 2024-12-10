@@ -6,36 +6,63 @@ import {
   getFirestore,
   onSnapshot,
   query,
+  where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import MyThread from "@/components/profile-components/MyThread";
 import { app } from "../../../../../lib/firebase-config";
 import ThreadSkeleton from "@/components/reusable-components/ThreadSkeleton";
+import { CurrentAuthUserInfoContext } from "@/components/provider/Providers";
 
 function Threads() {
   const auth = getAuth();
   const db = getFirestore(app);
   const [myThreads, setMyThreads] = useState([]);
+  const [noThreads, setNoThreads] = useState(false);
+  const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
   useEffect(() => {
     if (auth.currentUser?.uid) {
       const allThreads = collection(db, "allThreads");
       const thread = collection(allThreads, auth.currentUser.uid, "threadList");
-      const q = query(thread);
+      const myThreads = collection(thread, "homeThreads");
+      // const q = query(
+      //   myThreads,
+      //   where("__name__", "==", auth.currentUser?.uid)
+      // );
 
-      const unsubscribe = onSnapshot(q, (snapshot) => {
+      const unsubscribe = onSnapshot(myThreads, (snapshot) => {
         const docs = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        //@ts-ignore
-        setMyThreads(docs);
+        if (docs.length === 0) {
+          setNoThreads(true);
+        } else {
+          setNoThreads(false);
+          //@ts-ignore
+          setMyThreads(docs);
+        }
         // console.log(docs);
       });
       // Cleanup listener on unmount
       return () => unsubscribe();
     }
-  });
+  }, []);
+  console.log(auth.currentUser?.uid);
+
+  if (noThreads) {
+    return (
+      <section className="flex flex-col w-full">
+        <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
+          👋 Welcome! It looks like you haven't created any Threads yet. ✍️
+          Start sharing your thoughts and experiences with the community by
+          clicking 'Create Thread'. We're excited to see what you have to share!
+          🚀
+        </p>
+      </section>
+    );
+  }
   return (
     <section className="flex flex-col w-full">
       {myThreads.length === 0 ? (
@@ -57,6 +84,7 @@ function Threads() {
               return (
                 <MyThread
                   key={myThread.id}
+                  threadID={myThread.id}
                   content={myThread.content}
                   author={myThread.author}
                   profilePicture={myThread.profilePicture}

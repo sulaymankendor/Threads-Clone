@@ -42,12 +42,13 @@ export default function Home() {
     });
     // Cleanup listener on unmount
     return () => unsubscribe();
-  });
+  }, []);
+
   return (
     <section className="h-[91vh] overflow-y-scroll flex flex-col items-center w-full">
       <h1 className="text-white text-2xl font-bold w-[90%] my-8">Home</h1>
       {threads.length === 0 ? (
-        <div className="w-[90%]">
+        <div className="w-[90%] max-sm:w-[100%]">
           {[...Array(5)].map((_, index) => (
             <ThreadSkeleton key={index} />
           ))}
@@ -58,6 +59,7 @@ export default function Home() {
             return (
               <Thread
                 key={thread.id}
+                id={thread.id}
                 author={thread.author}
                 content={thread.content}
                 profilePicture={thread.profilePicture}
@@ -67,7 +69,6 @@ export default function Home() {
           })}
         </>
       )}
-      {/* <ThreadSkeleton /> */}
     </section>
   );
 }

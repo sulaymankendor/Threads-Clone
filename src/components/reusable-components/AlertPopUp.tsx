@@ -15,7 +15,10 @@ import { app } from "../../../lib/firebase-config";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
-import { CurrentAuthUserInfoContext } from "../provider/Providers";
+import {
+  CurrentAuthUserInfoContext,
+  RouterContext,
+} from "../provider/Providers";
 
 function AlertPopUp({
   openAlertPopup,
@@ -24,6 +27,7 @@ function AlertPopUp({
   openAlertPopup: boolean;
   setOpenAlertPopup: Dispatch<SetStateAction<boolean>>;
 }) {
+  const router = useContext(RouterContext);
   const auth = getAuth(app);
   const [isLoggingOutCurrentAuthUser, setIsLoggingOutCurrentAuthUser] =
     useState(false);
@@ -62,6 +66,7 @@ function AlertPopUp({
                       bio: "",
                       profilePicture: "",
                     });
+                    router?.push("/");
                     setIsLoggingOutCurrentAuthUser(false);
                     setOpenAlertPopup(false);
                   })

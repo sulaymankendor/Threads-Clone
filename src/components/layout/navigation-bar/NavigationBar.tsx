@@ -31,7 +31,7 @@ const navLinks: { navigationName: string; svg: JSX.Element; path: string }[] = [
 function NavigationBar() {
   const pathName = usePathname();
   return (
-    <section>
+    <section className="max-sm:hidden">
       <nav className="w-[210px] p-1 bg-zinc-900 h-[93vh]">
         {navLinks.map((navLinks) => {
           return (

@@ -7,11 +7,13 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import CommentSection from "../reusable-components/CommentSection";
 
 function Thread({
+  id,
   author,
   content,
   profilePicture,
   createdAt,
 }: {
+  id: string;
   author: string;
   content: string;
   profilePicture: string;
@@ -97,6 +99,7 @@ function Thread({
       <div className="w-[90%]">
         {showCommentsSection && (
           <CommentSection
+            threadID={id}
             verticalMargin={"mt-[-23px] mb-4"}
             closeShowCommentsSection={setShowCommentsSection}
           />

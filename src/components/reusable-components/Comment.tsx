@@ -3,19 +3,24 @@ import { Avatar, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
-function Comment() {
+function Comment({
+  author,
+  createdAt,
+  comment,
+  authorProfilePic,
+}: {
+  author: string;
+  createdAt: any;
+  comment: string;
+  authorProfilePic: string;
+}) {
   return (
-    <div className="border-y-gray-800 border-t-[0.5px] p-3 bg-gray-950 ">
+    <div className="border-y-gray-800 border-b-[0.5px] p-3 bg-gray-950 ">
       <div className="w-[90%] flex items-center mt-5">
-        <Avatar
-          alt="Remy Sharp"
-          src="https://mui.com/static/images/avatar/1.jpg"
-        />
+        <Avatar alt={author} src={authorProfilePic} />
         <div className="ml-3">
-          <h1 className="text-gray-200 text-md font-bold">Empire</h1>
-          <p className="text-gray-300 text-[13px] mt-2">
-            Lkdj fd fkdfkdmf sdlf dmfskm
-          </p>
+          <h1 className="text-gray-200 text-md font-bold">{author}</h1>
+          <p className="text-gray-300 text-[13px] mt-2">{comment}</p>
         </div>
       </div>
       <div className="w-[90%]">

@@ -30,18 +30,18 @@ function Layout({ children }: { children: React.ReactNode }) {
   const showDarkOverlay = useContext(ShowDarkOverlayContext);
   return (
     <>
+      {showDarkOverlay?.showDarkOverlay && <PageLoadingUI />}
       <main className="h-[100vh] overflow-hidden">
         <Header />
         <div className="flex justify-between">
           <NavigationBar />
-          <div className="w-[63vw]">{children}</div>
+          <div className="w-[63vw] max-sm:w-full">{children}</div>
           <Suggestions />
           {showAutheticationModal?.showAuthenticationModal && (
             <Authentication />
           )}
           {showOnBoardingModal?.showOnBoardingModal && <Onboarding />}
         </div>
-        {showDarkOverlay?.showDarkOverlay && <PageLoadingUI />}
       </main>
     </>
   );

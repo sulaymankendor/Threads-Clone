@@ -3,7 +3,7 @@ import SuggestedCommunities from "./suggested-communities/SuggestedCommunities";
 
 function Suggestions() {
   return (
-    <section className="bg-zinc-900 w-[262px] h-[93vh]">
+    <section className="bg-zinc-900 w-[262px] h-[93vh] max-sm:hidden">
       <SuggestedCommunities />
       <SimilarMinds />
     </section>
