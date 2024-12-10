@@ -23,48 +23,59 @@ function Threads() {
   const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
   useEffect(() => {
     if (auth.currentUser?.uid) {
-      const allThreads = collection(db, "allThreads");
-      const thread = collection(allThreads, auth.currentUser.uid, "threadList");
-      const myThreads = collection(thread, "homeThreads");
-      // const q = query(
-      //   myThreads,
-      //   where("__name__", "==", auth.currentUser?.uid)
-      // );
+      // Reference the specific document inside "threadList"
+      const specificDoc = doc(
+        db,
+        "allThreads",
+        auth.currentUser.uid,
+        "threadList",
+        "specificDocId" // Replace "specificDocId" with the actual document ID if dynamic
+      );
 
-      const unsubscribe = onSnapshot(myThreads, (snapshot) => {
-        const docs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        if (docs.length === 0) {
-          setNoThreads(true);
-        } else {
+      // Listen for changes in the specific document
+      const unsubscribe = onSnapshot(specificDoc, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
           setNoThreads(false);
-          //@ts-ignore
-          setMyThreads(docs);
+
+          // If the document is expected to contain an array of threads
+          if (Array.isArray(data?.threads)) {
+            setMyThreads(
+              //@ts-ignore
+              data.threads.map((thread, index) => ({ id: index, ...thread }))
+            );
+          } else {
+            // Handle other data formats if needed
+            //@ts-ignore
+            setMyThreads([{ id: snapshot.id, ...data }]);
+          }
+        } else {
+          // If the document does not exist
+          setNoThreads(true);
+          setMyThreads([]);
         }
-        // console.log(docs);
       });
+
       // Cleanup listener on unmount
       return () => unsubscribe();
     }
   }, [auth?.currentUser?.uid, db]);
 
-  if (noThreads) {
-    return (
-      <section className="flex flex-col w-full">
-        {/* <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
-          👋 Welcome! It looks like you haven't created any Threads yet. ✍️
-          Start sharing your thoughts and experiences with the community by
-          clicking 'Create Thread'. We're excited to see what you have to share!
-          🚀
-        </p> */}
-        <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
-          {`👋 Welcome! It looks like you haven't created any Threads yet. ✍️ Start sharing your thoughts and experiences with the community by clicking 'Create Thread'. We're excited to see what you have to share! 🚀`}
-        </p>
-      </section>
-    );
-  }
+  // if (noThreads) {
+  //   return (
+  //     <section className="flex flex-col w-full">
+  //       {/* <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
+  //         👋 Welcome! It looks like you haven't created any Threads yet. ✍️
+  //         Start sharing your thoughts and experiences with the community by
+  //         clicking 'Create Thread'. We're excited to see what you have to share!
+  //         🚀
+  //       </p> */}
+  //       <p className="font-bold text-base py-16 text-white w-[90%] mx-auto">
+  //         {`👋 Welcome! It looks like you haven't created any Threads yet. ✍️ Start sharing your thoughts and experiences with the community by clicking 'Create Thread'. We're excited to see what you have to share! 🚀`}
+  //       </p>
+  //     </section>
+  //   );
+  // }
   return (
     <section className="flex flex-col w-full">
       {myThreads.length === 0 ? (
