@@ -10,6 +10,7 @@ import {
   getDocs,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
 } from "firebase/firestore";
 import ThreadSkeleton from "../reusable-components/ThreadSkeleton";
@@ -32,7 +33,8 @@ export default function Home() {
   >([]);
   useEffect(() => {
     const homeThreads = collection(db, "homeThreads");
-    const unsubscribe = onSnapshot(homeThreads, (snapshot) => {
+    const q = query(homeThreads, orderBy("createdAt", "desc")); // Order by date descending
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),

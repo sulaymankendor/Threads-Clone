@@ -22,7 +22,7 @@ function Threads() {
   const [noThreads, setNoThreads] = useState(false);
   const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
   useEffect(() => {
-    const userId = auth.currentUser?.uid;
+    const userId = currentAuthUserInfo?.currentAuthUserInfo.uid;
     if (!userId) return;
 
     // Reference to the "threadList" subcollection
