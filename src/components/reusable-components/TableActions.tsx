@@ -5,14 +5,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import EllipsisHorizontal from "@/svg/EllipsisHorizontal";
+// import EllipsisHorizontal from "@/svg/EllipsisHorizontal";
 
 function TableActions() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <EllipsisHorizontal />
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger>{/* <EllipsisHorizontal /> */}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
