@@ -22,44 +22,33 @@ function Threads() {
   const [noThreads, setNoThreads] = useState(false);
   const currentAuthUserInfo = useContext(CurrentAuthUserInfoContext);
   useEffect(() => {
-    if (auth.currentUser?.uid) {
-      // Reference the specific document inside "threadList"
-      const specificDoc = doc(
-        db,
-        "allThreads",
-        auth.currentUser.uid,
-        "threadList",
-        "specificDocId" // Replace "specificDocId" with the actual document ID if dynamic
-      );
+    const userId = auth.currentUser?.uid;
+    if (!userId) return;
 
-      // Listen for changes in the specific document
-      const unsubscribe = onSnapshot(specificDoc, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          setNoThreads(false);
+    // Reference to the "threadList" subcollection
+    const threadListRef = collection(db, "allThreads", userId, "threadList");
 
-          // If the document is expected to contain an array of threads
-          if (Array.isArray(data?.threads)) {
-            setMyThreads(
-              //@ts-ignore
-              data.threads.map((thread, index) => ({ id: index, ...thread }))
-            );
-          } else {
-            // Handle other data formats if needed
-            //@ts-ignore
-            setMyThreads([{ id: snapshot.id, ...data }]);
-          }
-        } else {
-          // If the document does not exist
-          setNoThreads(true);
-          setMyThreads([]);
-        }
-      });
+    // Listen for real-time updates in the collection
+    const unsubscribe = onSnapshot(threadListRef, (snapshot) => {
+      if (!snapshot.empty) {
+        setNoThreads(false);
 
-      // Cleanup listener on unmount
-      return () => unsubscribe();
-    }
-  }, [auth?.currentUser?.uid, db]);
+        // Map through documents and extract data
+        const threads = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        //@ts-ignore
+        setMyThreads(threads);
+      } else {
+        setNoThreads(true);
+        setMyThreads([]);
+      }
+    });
+
+    // Cleanup listener on unmount
+    return () => unsubscribe();
+  }, [auth?.currentUser?.uid]);
 
   // if (noThreads) {
   //   return (
