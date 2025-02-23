@@ -5,6 +5,7 @@ import {
   doc,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -27,9 +28,10 @@ function Threads() {
 
     // Reference to the "threadList" subcollection
     const threadListRef = collection(db, "allThreads", userId, "threadList");
+    const q = query(threadListRef, orderBy("createdAt", "desc")); // Order by date descending
 
     // Listen for real-time updates in the collection
-    const unsubscribe = onSnapshot(threadListRef, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       if (!snapshot.empty) {
         setNoThreads(false);
 
