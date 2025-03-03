@@ -14,6 +14,7 @@ import {
   doc,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -54,8 +55,9 @@ function CommentSection({
   useEffect(() => {
     const q = query(
       collection(db, "comments"),
-      where("threadID", "==", threadID)
+      where("threadID", "==", threadID) // Filter by threadID
     );
+    // const a = query(q, where("threadID", "==", q));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map((doc) => ({
         id: doc.id,

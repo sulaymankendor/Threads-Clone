@@ -1,6 +1,78 @@
+"use client";
 import User from "@/components/reusable-components/User";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { app } from "../../../lib/firebase-config";
+import { CircularProgress } from "@mui/material";
 
-function search() {
+function Search() {
+  const [searchedText, setSearchedText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchedUsers, setSearchedUsers] = useState<
+    | {
+        id: string;
+        bio: string;
+        email: string;
+        name: string;
+        profilePicture: string;
+        uid: string;
+      }[]
+    | []
+  >([]);
+  const [users, setUsers] = useState<
+    | {
+        id: string;
+        bio: string;
+        email: string;
+        name: string;
+        profilePicture: string;
+        uid: string;
+      }[]
+    | []
+  >([]);
+  const db = getFirestore(app);
+
+  const renderUsers = () => {
+    if (searchedText.length > 0 && searchedUsers.length > 0) {
+      return searchedUsers.map((user) => <User key={user.id} user={user} />);
+    } else if (searchedText.length === 0 && searchedUsers.length === 0) {
+      return users.map((user) => <User key={user.id} user={user} />);
+    } else {
+      return (
+        <h1 className="text-white text-center text-2xl font-bold w-[90%] my-8">
+          No Results Found
+        </h1>
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (searchedText.length > 0) {
+      setSearchedUsers(
+        users.filter((user) =>
+          user.name.toLowerCase().includes(searchedText.toLowerCase())
+        )
+      );
+    } else {
+      setSearchedUsers([]);
+    }
+  }, [searchedText]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const homeThreads = collection(db, "users");
+    const unsubscribe = onSnapshot(homeThreads, (snapshot) => {
+      const docs = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //@ts-ignore
+      setUsers(docs);
+      setIsLoading(false);
+    });
+    // Cleanup listener on unmount
+    return () => unsubscribe();
+  }, []);
   return (
     <section className="h-[91vh] overflow-y-scroll flex flex-col items-center w-full">
       <h1 className="text-white text-2xl font-bold w-[90%] my-8">Search</h1>
@@ -31,27 +103,12 @@ function search() {
             borderTopRightRadius: "7px",
             borderBottomRightRadius: "7px",
           }}
+          onChange={(event) => setSearchedText(event.target.value)}
         />
       </div>
-      <div className="w-[90%] h-[70vh] overflow-y-scroll">
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-      </div>
+      <div className="w-[90%] h-[70vh] overflow-y-scroll">{renderUsers()}</div>
     </section>
   );
 }
 
-export default search;
+export default Search;

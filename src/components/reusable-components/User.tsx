@@ -1,18 +1,25 @@
 import Link from "next/link";
 import { Avatar } from "@mui/material";
 
-function User() {
+function User({
+  user,
+}: {
+  user: {
+    id: string;
+    bio: string;
+    email: string;
+    name: string;
+    profilePicture: string;
+    uid: string;
+  };
+}) {
   return (
     <div className="flex justify-between w-full mt-3 mb-7 items-center">
       <div className="flex items-center">
-        <Avatar
-          alt="Remy Sharp"
-          src="https://mui.com/static/images/avatar/1.jpg"
-          className="ml-3"
-        />
+        <Avatar alt={user?.name} src={user?.profilePicture} className="ml-3" />
         <div className="ml-1">
-          <h3 className="text-gray-200 text-sm font-bold">JS Mastery</h3>
-          <p className="text-gray-500 text-xs">@js-mastery</p>
+          <h3 className="text-gray-200 text-sm font-bold">{user?.name}</h3>
+          <p className="text-gray-500 text-xs">@{user?.bio}</p>
         </div>
       </div>
       <Link
